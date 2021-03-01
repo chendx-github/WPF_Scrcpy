@@ -1,0 +1,103 @@
+﻿<Window x:Class="Wpf_Scrcpy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_Scrcpy"
+        mc:Ignorable="d"
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        Title="Wpf_Scrcpy" Height="289.518" Width="505.06">
+    <Grid>
+        <StackPanel>
+            <StackPanel.Resources>
+                <Style TargetType="ComboBox">
+                    <Setter Property="Width" Value="100"></Setter>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Width" Value="100"></Setter>
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="选择设备"></Label>
+                <ComboBox ItemsSource="{Binding Devices}" Text="{Binding Text,ElementName=Device_txt}" >
+                </ComboBox>
+                <TextBox Width="100" x:Name="Device_txt" DataContext="{Binding 设备}" Text="{Binding 参数}" ></TextBox>
+                <Button Command="{Binding getDevices}">查看连接设备</Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" DataContext="{Binding 分辨率}">
+                <Label Content="分辨率"></Label>
+                <ComboBox Text="{Binding 参数}">
+                    <ComboBoxItem>128</ComboBoxItem>
+                    <ComboBoxItem>256</ComboBoxItem>
+                    <ComboBoxItem>512</ComboBoxItem>
+                    <ComboBoxItem>640</ComboBoxItem>
+                    <ComboBoxItem>720</ComboBoxItem>
+                    <ComboBoxItem>1080</ComboBoxItem>
+                </ComboBox>
+                <TextBox Width="100" Text="{Binding 参数}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" DataContext="{Binding 码率}">
+                <Label>码率</Label>
+                <ComboBox Text="{Binding 参数}">
+                    <ComboBoxItem>1M</ComboBoxItem>
+                    <ComboBoxItem>2M</ComboBoxItem>
+                    <ComboBoxItem>3M</ComboBoxItem>
+                    <ComboBoxItem>4M</ComboBoxItem>
+                    <ComboBoxItem>5M</ComboBoxItem>
+                    <ComboBoxItem>6M</ComboBoxItem>
+                    <ComboBoxItem>8M</ComboBoxItem>
+                    <ComboBoxItem>10M</ComboBoxItem>
+                    <ComboBoxItem>20M</ComboBoxItem>
+                    <ComboBoxItem>60M</ComboBoxItem>
+                    <ComboBoxItem>100M</ComboBoxItem>
+                </ComboBox>
+                <TextBox Text="{Binding 参数}"></TextBox>
+                <Label>M</Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" DataContext="{Binding 帧率}">
+                <Label>帧率</Label>
+                <ComboBox Text="{Binding 参数}">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>10</ComboBoxItem>
+                    <ComboBoxItem>15</ComboBoxItem>
+                    <ComboBoxItem>25</ComboBoxItem>
+                    <ComboBoxItem>35</ComboBoxItem>
+                    <ComboBoxItem>45</ComboBoxItem>
+                    <ComboBoxItem>60</ComboBoxItem>
+                    <ComboBoxItem>144</ComboBoxItem>
+                </ComboBox>
+                <TextBox Width="100" Text="{Binding 参数}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>
+                    <CheckBox>启用</CheckBox>
+                </Label>
+                <Label>画面裁剪</Label>
+                <TextBox Width="100">1224:1440:0:0</TextBox>
+                <Label>以 (0,0) 为原点的 1224x1440 像素</Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" DataContext="{Binding 锁定屏幕方向}">
+                <Label>锁定屏幕方向</Label>
+                <ComboBox SelectedIndex="{Binding 参数}" x:Name="fangxiang">
+                    <ComboBoxItem>自然方向</ComboBoxItem>
+                    <ComboBoxItem>逆时针旋转 90°</ComboBoxItem>
+                    <ComboBoxItem>180°</ComboBoxItem>
+                    <ComboBoxItem>顺时针旋转 90°</ComboBoxItem>
+                </ComboBox>
+                <TextBox Text="{Binding SelectedIndex,ElementName=fangxiang}" Width="100">
+                </TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" DataContext="{Binding 无边框}">
+                <Label>无边框</Label>
+                <Label>
+                    <CheckBox IsChecked="{Binding 启用}">是</CheckBox>
+                </Label>
+                <TextBox Width="100"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Width="100" Command="{Binding E_Submit}">开始</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
