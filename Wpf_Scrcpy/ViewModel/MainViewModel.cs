@@ -112,7 +112,7 @@ namespace Wpf_Scrcpy.ViewModel
                 {
                     string str = s1.Data;
                     MyLog.MyLog.logclass.info(str);
-                    if(Regex.IsMatch(str, @"\tdevice$"))
+                    if(str!= null && Regex.IsMatch(str, @"\tdevice$"))
                     {
                         _Devices1.Add(str.Replace("\tdevice", ""));
                         Devices = _Devices1;

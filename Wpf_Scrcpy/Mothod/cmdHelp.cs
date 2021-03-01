@@ -28,6 +28,7 @@ namespace Wpf_Scrcpy.Mothod
             {
                 process.StandardInput.WriteLine(cd_str);
                 process.StandardInput.WriteLine(cmd_str);
+                process.StandardInput.WriteLine("exit");
             });
             return process;
         }
