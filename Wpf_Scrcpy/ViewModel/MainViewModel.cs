@@ -32,9 +32,9 @@ namespace Wpf_Scrcpy.ViewModel
         public COMMAND_data 设备 { get => _设备; set => Set(ref _设备, value); }
         COMMAND_data _码率 = new COMMAND_data() { 命令 = "码率", 描述 = "默认码率是 8Mbps。要改变视频的码率 (例如改为 1Mbps)：", 指令 = "-b", 参数 = "1M", 启用 = true };
         public COMMAND_data 码率 { get => _码率; set => Set(ref _码率, value); }
-        COMMAND_data _帧率 = new COMMAND_data() { 命令 = "帧率", 描述 = "", 指令 = "--max-fps", 参数 = "1", 启用 = true };
+        COMMAND_data _帧率 = new COMMAND_data() { 命令 = "帧率", 描述 = "", 指令 = "--max-fps", 参数 = "10", 启用 = true };
         public COMMAND_data 帧率 { get => _帧率; set => Set(ref _帧率, value); }
-        COMMAND_data _分辨率 = new COMMAND_data() { 命令 = "分辨率", 描述 = "", 指令 = "-m", 参数 = "128", 启用 = true };
+        COMMAND_data _分辨率 = new COMMAND_data() { 命令 = "分辨率", 描述 = "", 指令 = "-m", 参数 = "512", 启用 = true };
         public COMMAND_data 分辨率 { get => _分辨率; set => Set(ref _分辨率, value); }
         public COMMAND_data 画面裁剪 = new COMMAND_data() { 命令 = "画面裁剪", 描述 = "", 指令 = "--crop", 参数 = "", 启用 = false };
         COMMAND_data _锁定屏幕方向 = new COMMAND_data() { 命令 = "锁定屏幕方向", 描述 = "", 指令 = "--lock-video-orientation", 参数 = 0, 启用 = false };
@@ -85,6 +85,7 @@ namespace Wpf_Scrcpy.ViewModel
             });
             _E_Submit = new Lazy<RelayCommand>(() => new RelayCommand(() =>
             {
+
                 List<string> strs1 = new List<string>();
                 foreach (var item in datas1)
                 {

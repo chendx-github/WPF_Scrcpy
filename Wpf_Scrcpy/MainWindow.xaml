@@ -8,6 +8,11 @@
         DataContext="{Binding Main, Source={StaticResource Locator}}"
         Title="Wpf_Scrcpy" Height="289.518" Width="505.06">
     <Grid>
+        <Grid.Resources>
+            <Style x:Key="lab1" TargetType="Label" >
+                <Setter Property="Width" Value="100px"></Setter>
+            </Style>
+        </Grid.Resources>
         <StackPanel>
             <StackPanel.Resources>
                 <Style TargetType="ComboBox">
@@ -18,14 +23,14 @@
                 </Style>
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal">
-                <Label Content="选择设备"></Label>
-                <ComboBox ItemsSource="{Binding Devices}" Text="{Binding Text,ElementName=Device_txt}" >
+                <Label Content="选择设备" Style="{DynamicResource lab1}"></Label>
+                <ComboBox ItemsSource="{Binding Devices}" SelectedValue="{Binding 设备.参数}" >
                 </ComboBox>
                 <TextBox Width="100" x:Name="Device_txt" DataContext="{Binding 设备}" Text="{Binding 参数}" ></TextBox>
                 <Button Command="{Binding getDevices}">查看连接设备</Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal" DataContext="{Binding 分辨率}">
-                <Label Content="分辨率"></Label>
+                <Label Content="分辨率" Style="{DynamicResource lab1}"></Label>
                 <ComboBox Text="{Binding 参数}">
                     <ComboBoxItem>128</ComboBoxItem>
                     <ComboBoxItem>256</ComboBoxItem>
@@ -37,7 +42,7 @@
                 <TextBox Width="100" Text="{Binding 参数}"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" DataContext="{Binding 码率}">
-                <Label>码率</Label>
+                <Label  Style="{DynamicResource lab1}">码率</Label>
                 <ComboBox Text="{Binding 参数}">
                     <ComboBoxItem>1M</ComboBoxItem>
                     <ComboBoxItem>2M</ComboBoxItem>
@@ -55,7 +60,7 @@
                 <Label>M</Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal" DataContext="{Binding 帧率}">
-                <Label>帧率</Label>
+                <Label Style="{DynamicResource lab1}">帧率</Label>
                 <ComboBox Text="{Binding 参数}">
                     <ComboBoxItem>1</ComboBoxItem>
                     <ComboBoxItem>4</ComboBoxItem>
@@ -78,7 +83,7 @@
                 <Label>以 (0,0) 为原点的 1224x1440 像素</Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal" DataContext="{Binding 锁定屏幕方向}">
-                <Label>锁定屏幕方向</Label>
+                <Label Style="{DynamicResource lab1}">锁定屏幕方向</Label>
                 <ComboBox SelectedIndex="{Binding 参数}" x:Name="fangxiang">
                     <ComboBoxItem>自然方向</ComboBoxItem>
                     <ComboBoxItem>逆时针旋转 90°</ComboBoxItem>
