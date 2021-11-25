@@ -74,12 +74,12 @@
                 </ComboBox>
                 <TextBox Width="100" Text="{Binding 参数}"></TextBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" DataContext="{Binding 画面裁剪}">
                 <Label>
-                    <CheckBox>启用</CheckBox>
+                    <CheckBox IsChecked="{Binding 启用}">启用</CheckBox>
                 </Label>
                 <Label>画面裁剪</Label>
-                <TextBox Width="100">1224:1440:0:0</TextBox>
+                <TextBox Width="100" Text="{Binding 参数}"></TextBox>
                 <Label>以 (0,0) 为原点的 1224x1440 像素</Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal" DataContext="{Binding 锁定屏幕方向}">

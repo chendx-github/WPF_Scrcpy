@@ -36,7 +36,8 @@ namespace Wpf_Scrcpy.ViewModel
         public COMMAND_data 帧率 { get => _帧率; set => Set(ref _帧率, value); }
         COMMAND_data _分辨率 = new COMMAND_data() { 命令 = "分辨率", 描述 = "", 指令 = "-m", 参数 = "512", 启用 = true };
         public COMMAND_data 分辨率 { get => _分辨率; set => Set(ref _分辨率, value); }
-        public COMMAND_data 画面裁剪 = new COMMAND_data() { 命令 = "画面裁剪", 描述 = "", 指令 = "--crop", 参数 = "", 启用 = false };
+        COMMAND_data _画面裁剪 = new COMMAND_data() { 命令 = "画面裁剪", 描述 = "", 指令 = "--crop", 参数 = "1080:2000:0:0", 启用 = false };
+        public COMMAND_data 画面裁剪 { get => _画面裁剪; set => Set(ref _画面裁剪, value); }
         COMMAND_data _锁定屏幕方向 = new COMMAND_data() { 命令 = "锁定屏幕方向", 描述 = "", 指令 = "--lock-video-orientation", 参数 = 0, 启用 = false };
         public COMMAND_data 锁定屏幕方向 { get => _锁定屏幕方向; set => Set(ref _锁定屏幕方向, value); }
         public COMMAND_data 编码器 = new COMMAND_data() { 命令 = "编码器", 描述 = "一些设备内置了多种编码器，但是有的编码器会导致问题或崩溃。可以手动选择其它编码器：\r\n\r\nscrcpy --encoder OMX.qcom.video.encoder.avc\r\n要列出可用的编码器，可以指定一个不存在的编码器名称，错误信息中会包含所有的编码器：", 指令 = "--encoder", 参数 = "", 启用 = false };
@@ -91,7 +92,7 @@ namespace Wpf_Scrcpy.ViewModel
                 {
                     if (item.启用)
                     {
-                        if(item == 设备 && item.参数 == "")
+                        if (item == 设备 && item.参数 == "")
                         {
                             continue;
                         }
@@ -113,7 +114,7 @@ namespace Wpf_Scrcpy.ViewModel
                 {
                     string str = s1.Data;
                     MyLog.MyLog.logclass.info(str);
-                    if(str!= null && Regex.IsMatch(str, @"\tdevice$"))
+                    if (str != null && Regex.IsMatch(str, @"\tdevice$"))
                     {
                         _Devices1.Add(str.Replace("\tdevice", ""));
                         Devices = _Devices1;
