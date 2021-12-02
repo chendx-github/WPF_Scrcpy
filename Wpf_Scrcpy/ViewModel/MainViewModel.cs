@@ -40,6 +40,9 @@ namespace Wpf_Scrcpy.ViewModel
         public COMMAND_data 画面裁剪 { get => _画面裁剪; set => Set(ref _画面裁剪, value); }
         COMMAND_data _锁定屏幕方向 = new COMMAND_data() { 命令 = "锁定屏幕方向", 描述 = "", 指令 = "--lock-video-orientation", 参数 = 0, 启用 = false };
         public COMMAND_data 锁定屏幕方向 { get => _锁定屏幕方向; set => Set(ref _锁定屏幕方向, value); }
+        COMMAND_data _缓冲区 = new COMMAND_data() { 命令 = "缓冲区", 描述 = "", 指令 = "--display-buffer", 参数 = "50", 启用 = true };
+        public COMMAND_data 缓冲区 { get => _缓冲区; set => Set(ref _缓冲区, value); }
+        
         public COMMAND_data 编码器 = new COMMAND_data() { 命令 = "编码器", 描述 = "一些设备内置了多种编码器，但是有的编码器会导致问题或崩溃。可以手动选择其它编码器：\r\n\r\nscrcpy --encoder OMX.qcom.video.encoder.avc\r\n要列出可用的编码器，可以指定一个不存在的编码器名称，错误信息中会包含所有的编码器：", 指令 = "--encoder", 参数 = "", 启用 = false };
         public COMMAND_data 屏幕录制 = new COMMAND_data() { 命令 = "屏幕录制", 描述 = "scrcpy --no-display --record file.mp4\r\nscrcpy -Nr file.mkv\r\n# 按 Ctrl+C 停止录制", 指令 = "-r", 参数 = "", 启用 = false };
         public COMMAND_data SSH_隧道 = new COMMAND_data() { 命令 = "SSH_隧道", 描述 = "ssh -CN -L5037:localhost:5037 -R27183:localhost:27183 your_remote_computer", 指令 = "-CN", 参数 = "", 启用 = false };
@@ -83,6 +86,7 @@ namespace Wpf_Scrcpy.ViewModel
                 标题,
                 位置和大小,
                 旋转,
+                缓冲区
             });
             _E_Submit = new Lazy<RelayCommand>(() => new RelayCommand(() =>
             {
@@ -96,7 +100,14 @@ namespace Wpf_Scrcpy.ViewModel
                         {
                             continue;
                         }
-                        strs1.Add($"{item.指令} {item.参数}");
+                        if(item == 缓冲区 && string.IsNullOrEmpty(item.参数))
+                        {
+                            strs1.Add($"{item.指令}={item.参数}");
+                        }
+                        else
+                        {
+                            strs1.Add($"{item.指令} {item.参数}");
+                        }
                     }
                 }
                 string cmd_str = $"scrcpy {string.Join(" ", strs1)}";

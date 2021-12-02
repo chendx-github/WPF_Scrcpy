@@ -44,6 +44,11 @@
             <StackPanel Orientation="Horizontal" DataContext="{Binding 码率}">
                 <Label  Style="{DynamicResource lab1}">码率</Label>
                 <ComboBox Text="{Binding 参数}">
+                    <ComboBoxItem>100K</ComboBoxItem>
+                    <ComboBoxItem>200K</ComboBoxItem>
+                    <ComboBoxItem>300K</ComboBoxItem>
+                    <ComboBoxItem>500K</ComboBoxItem>
+                    <ComboBoxItem>800K</ComboBoxItem>
                     <ComboBoxItem>1M</ComboBoxItem>
                     <ComboBoxItem>2M</ComboBoxItem>
                     <ComboBoxItem>3M</ComboBoxItem>
@@ -54,10 +59,9 @@
                     <ComboBoxItem>10M</ComboBoxItem>
                     <ComboBoxItem>20M</ComboBoxItem>
                     <ComboBoxItem>60M</ComboBoxItem>
-                    <ComboBoxItem>100M</ComboBoxItem>
                 </ComboBox>
                 <TextBox Text="{Binding 参数}"></TextBox>
-                <Label>M</Label>
+                <Label>K/M</Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal" DataContext="{Binding 帧率}">
                 <Label Style="{DynamicResource lab1}">帧率</Label>
@@ -91,6 +95,18 @@
                     <ComboBoxItem>顺时针旋转 90°</ComboBoxItem>
                 </ComboBox>
                 <TextBox Text="{Binding SelectedIndex,ElementName=fangxiang}" Width="100">
+                </TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" DataContext="{Binding 缓冲区}">
+                <Label Style="{DynamicResource lab1}">缓冲区</Label>
+                <ComboBox Text="{Binding 参数}" x:Name="huanchong">
+                    <ComboBoxItem>10</ComboBoxItem>
+                    <ComboBoxItem>50</ComboBoxItem>
+                    <ComboBoxItem>70</ComboBoxItem>
+                    <ComboBoxItem>100</ComboBoxItem>
+                    <ComboBoxItem>150</ComboBoxItem>
+                </ComboBox>
+                <TextBox Text="{Binding 参数}" Width="100">
                 </TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" DataContext="{Binding 无边框}">
