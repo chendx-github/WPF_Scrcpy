@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Wpf_Scrcpy"
         mc:Ignorable="d"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
-        Title="Wpf_Scrcpy" Height="289.518" Width="505.06">
+        Title="Wpf_Scrcpy" Height="328" Width="424">
     <Grid>
         <Grid.Resources>
             <Style x:Key="lab1" TargetType="Label" >
@@ -23,6 +23,10 @@
                 </Style>
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal">
+                <Label Content="程序路径" Style="{DynamicResource lab1}"></Label>
+                <TextBox Width="100" x:Name="ExePath" Text="{Binding ExePath}" ></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
                 <Label Content="选择设备" Style="{DynamicResource lab1}"></Label>
                 <ComboBox ItemsSource="{Binding Devices}" SelectedValue="{Binding 设备.参数}" >
                 </ComboBox>
@@ -38,6 +42,7 @@
                     <ComboBoxItem>640</ComboBoxItem>
                     <ComboBoxItem>720</ComboBoxItem>
                     <ComboBoxItem>1080</ComboBoxItem>
+                    <ComboBoxItem>1600</ComboBoxItem>
                 </ComboBox>
                 <TextBox Width="100" Text="{Binding 参数}"></TextBox>
             </StackPanel>
@@ -66,6 +71,7 @@
             <StackPanel Orientation="Horizontal" DataContext="{Binding 帧率}">
                 <Label Style="{DynamicResource lab1}">帧率</Label>
                 <ComboBox Text="{Binding 参数}">
+                    <ComboBoxItem>0</ComboBoxItem>
                     <ComboBoxItem>1</ComboBoxItem>
                     <ComboBoxItem>4</ComboBoxItem>
                     <ComboBoxItem>10</ComboBoxItem>
@@ -116,8 +122,15 @@
                 </Label>
                 <TextBox Width="100"></TextBox>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" DataContext="{Binding 保持常亮}">
+                <Label>常亮</Label>
+                <Label>
+                    <CheckBox IsChecked="{Binding 启用}">是</CheckBox>
+                </Label>
+                <TextBox Width="100"></TextBox>
+            </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Width="100" Command="{Binding E_Submit}">开始</Button>
+                <Button Width="400" Height="30" Command="{Binding E_Submit}">开始</Button>
             </StackPanel>
         </StackPanel>
     </Grid>

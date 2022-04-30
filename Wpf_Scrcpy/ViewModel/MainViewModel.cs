@@ -3,11 +3,14 @@ using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Wpf_Scrcpy.MOD;
 using Wpf_Scrcpy.Mothod;
+using Mapster.Models;
+using Mapster;
 
 namespace Wpf_Scrcpy.ViewModel
 {
@@ -30,9 +33,9 @@ namespace Wpf_Scrcpy.ViewModel
 
         COMMAND_data _设备 = new COMMAND_data() { 命令 = "设备", 描述 = "如果 adb devices 列出了多个设备，您必须指定设备的 序列号 ：", 指令 = "-s", 参数 = "", 启用 = true };
         public COMMAND_data 设备 { get => _设备; set => Set(ref _设备, value); }
-        COMMAND_data _码率 = new COMMAND_data() { 命令 = "码率", 描述 = "默认码率是 8Mbps。要改变视频的码率 (例如改为 1Mbps)：", 指令 = "-b", 参数 = "1M", 启用 = true };
+        COMMAND_data _码率 = new COMMAND_data() { 命令 = "码率", 描述 = "默认码率是 8Mbps。要改变视频的码率 (例如改为 1Mbps)：", 指令 = "-b", 参数 = "6M", 启用 = true };
         public COMMAND_data 码率 { get => _码率; set => Set(ref _码率, value); }
-        COMMAND_data _帧率 = new COMMAND_data() { 命令 = "帧率", 描述 = "", 指令 = "--max-fps", 参数 = "10", 启用 = true };
+        COMMAND_data _帧率 = new COMMAND_data() { 命令 = "帧率", 描述 = "", 指令 = "--max-fps", 参数 = "100", 启用 = true };
         public COMMAND_data 帧率 { get => _帧率; set => Set(ref _帧率, value); }
         COMMAND_data _分辨率 = new COMMAND_data() { 命令 = "分辨率", 描述 = "", 指令 = "-m", 参数 = "512", 启用 = true };
         public COMMAND_data 分辨率 { get => _分辨率; set => Set(ref _分辨率, value); }
@@ -42,12 +45,13 @@ namespace Wpf_Scrcpy.ViewModel
         public COMMAND_data 锁定屏幕方向 { get => _锁定屏幕方向; set => Set(ref _锁定屏幕方向, value); }
         COMMAND_data _缓冲区 = new COMMAND_data() { 命令 = "缓冲区", 描述 = "", 指令 = "--display-buffer", 参数 = "50", 启用 = true };
         public COMMAND_data 缓冲区 { get => _缓冲区; set => Set(ref _缓冲区, value); }
-        
+        COMMAND_data _保持常亮 = new COMMAND_data() { 命令 = "保持常亮", 描述 = "", 指令 = "-w", 参数 = "", 启用 = false };
+        public COMMAND_data 保持常亮 { get => _保持常亮; set => Set(ref _保持常亮, value); }
+
         public COMMAND_data 编码器 = new COMMAND_data() { 命令 = "编码器", 描述 = "一些设备内置了多种编码器，但是有的编码器会导致问题或崩溃。可以手动选择其它编码器：\r\n\r\nscrcpy --encoder OMX.qcom.video.encoder.avc\r\n要列出可用的编码器，可以指定一个不存在的编码器名称，错误信息中会包含所有的编码器：", 指令 = "--encoder", 参数 = "", 启用 = false };
         public COMMAND_data 屏幕录制 = new COMMAND_data() { 命令 = "屏幕录制", 描述 = "scrcpy --no-display --record file.mp4\r\nscrcpy -Nr file.mkv\r\n# 按 Ctrl+C 停止录制", 指令 = "-r", 参数 = "", 启用 = false };
         public COMMAND_data SSH_隧道 = new COMMAND_data() { 命令 = "SSH_隧道", 描述 = "ssh -CN -L5037:localhost:5037 -R27183:localhost:27183 your_remote_computer", 指令 = "-CN", 参数 = "", 启用 = false };
         public COMMAND_data 关闭设备屏幕 = new COMMAND_data() { 命令 = "关闭设备屏幕", 描述 = "", 指令 = "--turn-screen-off", 参数 = "", 启用 = true };
-        public COMMAND_data 保持常亮 = new COMMAND_data() { 命令 = "保持常亮", 描述 = "", 指令 = "-w", 参数 = "", 启用 = false };
         public COMMAND_data 只读 = new COMMAND_data() { 命令 = "只读", 描述 = "", 指令 = "-n", 参数 = "", 启用 = false };
         public COMMAND_data 全屏 = new COMMAND_data() { 命令 = "全屏", 描述 = "", 指令 = "-f", 参数 = "", 启用 = false };
         public COMMAND_data 保持窗口在最前 = new COMMAND_data() { 命令 = "保持窗口在最前", 描述 = "", 指令 = "--always-on-top", 参数 = "", 启用 = false };
@@ -62,6 +66,9 @@ namespace Wpf_Scrcpy.ViewModel
         public List<string> Devices { get => _Devices; set => Set(ref _Devices, value); }
         string _device = "";
         public string device { get => _device; set => Set(ref _device, value); }
+        string _ExePath = @"D:\sof\scrcpy-win64-v1.17\scrcpy.exe";
+        public string ExePath { get => _ExePath; set => Set(ref _ExePath, value); }
+        string config_file = "config.json";
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -88,6 +95,22 @@ namespace Wpf_Scrcpy.ViewModel
                 旋转,
                 缓冲区
             });
+            if (File.Exists(config_file))
+            {
+                try
+                {
+                    var a001 = 序列化.序列化.json文件反序列化<List<COMMAND_data>>(config_file);
+                    datas1.ForEach(s =>
+                    {
+                        a001.Find(s1 => s1.命令 == s.命令)?.Adapt(s);
+                    });
+                }
+                catch (Exception)
+                {
+                }
+
+            }
+
             _E_Submit = new Lazy<RelayCommand>(() => new RelayCommand(() =>
             {
 
@@ -100,7 +123,7 @@ namespace Wpf_Scrcpy.ViewModel
                         {
                             continue;
                         }
-                        if(item == 缓冲区 && string.IsNullOrEmpty(item.参数))
+                        if (item == 缓冲区 && string.IsNullOrEmpty(item.参数))
                         {
                             strs1.Add($"{item.指令}={item.参数}");
                         }
@@ -110,12 +133,13 @@ namespace Wpf_Scrcpy.ViewModel
                         }
                     }
                 }
-                string cmd_str = $"scrcpy {string.Join(" ", strs1)}";
+                string cmd_str = $"{Path.GetFileNameWithoutExtension(ExePath)} {string.Join(" ", strs1)}";
                 MyLog.MyLog.logclass.info($"提交指令 scrcpy {cmd_str}");
                 cmdHelp.cmdPorcess(cmd_str, (s, s1) =>
                 {
                     MyLog.MyLog.logclass.info(s1.Data);
-                }, @"cd /d D:\sof\scrcpy-win64-v1.17");
+                }, $@"cd /d {Path.GetDirectoryName(ExePath)}");
+                序列化.序列化.序列化为json文件(config_file, datas1);
             })).Value;
             _getDevices = new RelayCommand(() =>
             {
@@ -130,7 +154,7 @@ namespace Wpf_Scrcpy.ViewModel
                         _Devices1.Add(str.Replace("\tdevice", ""));
                         Devices = _Devices1;
                     }
-                }, @"cd /d D:\sof\scrcpy-win64-v1.17");
+                }, $@"cd /d {Path.GetDirectoryName(ExePath)}");
             });
             if (IsInDesignMode)
             {
