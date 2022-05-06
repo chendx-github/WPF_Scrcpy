@@ -47,8 +47,10 @@ namespace Wpf_Scrcpy.ViewModel
         public COMMAND_data 缓冲区 { get => _缓冲区; set => Set(ref _缓冲区, value); }
         COMMAND_data _保持常亮 = new COMMAND_data() { 命令 = "保持常亮", 描述 = "", 指令 = "-w", 参数 = "", 启用 = false };
         public COMMAND_data 保持常亮 { get => _保持常亮; set => Set(ref _保持常亮, value); }
+        COMMAND_data _ExePath = new COMMAND_data() { 命令 = "ExePath", 描述 = "", 指令 = @"D:\sof\scrcpy-win64-v1.17\scrcpy.exe", 参数 = "", 启用 = false };
+        public COMMAND_data ExePath  { get => _ExePath; set => Set(ref _ExePath, value);}
 
-        public COMMAND_data 编码器 = new COMMAND_data() { 命令 = "编码器", 描述 = "一些设备内置了多种编码器，但是有的编码器会导致问题或崩溃。可以手动选择其它编码器：\r\n\r\nscrcpy --encoder OMX.qcom.video.encoder.avc\r\n要列出可用的编码器，可以指定一个不存在的编码器名称，错误信息中会包含所有的编码器：", 指令 = "--encoder", 参数 = "", 启用 = false };
+    public COMMAND_data 编码器 = new COMMAND_data() { 命令 = "编码器", 描述 = "一些设备内置了多种编码器，但是有的编码器会导致问题或崩溃。可以手动选择其它编码器：\r\n\r\nscrcpy --encoder OMX.qcom.video.encoder.avc\r\n要列出可用的编码器，可以指定一个不存在的编码器名称，错误信息中会包含所有的编码器：", 指令 = "--encoder", 参数 = "", 启用 = false };
         public COMMAND_data 屏幕录制 = new COMMAND_data() { 命令 = "屏幕录制", 描述 = "scrcpy --no-display --record file.mp4\r\nscrcpy -Nr file.mkv\r\n# 按 Ctrl+C 停止录制", 指令 = "-r", 参数 = "", 启用 = false };
         public COMMAND_data SSH_隧道 = new COMMAND_data() { 命令 = "SSH_隧道", 描述 = "ssh -CN -L5037:localhost:5037 -R27183:localhost:27183 your_remote_computer", 指令 = "-CN", 参数 = "", 启用 = false };
         public COMMAND_data 关闭设备屏幕 = new COMMAND_data() { 命令 = "关闭设备屏幕", 描述 = "", 指令 = "--turn-screen-off", 参数 = "", 启用 = true };
@@ -66,8 +68,6 @@ namespace Wpf_Scrcpy.ViewModel
         public List<string> Devices { get => _Devices; set => Set(ref _Devices, value); }
         string _device = "";
         public string device { get => _device; set => Set(ref _device, value); }
-        string _ExePath = @"D:\sof\scrcpy-win64-v1.17\scrcpy.exe";
-        public string ExePath { get => _ExePath; set => Set(ref _ExePath, value); }
         string config_file = "config.json";
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -93,7 +93,8 @@ namespace Wpf_Scrcpy.ViewModel
                 标题,
                 位置和大小,
                 旋转,
-                缓冲区
+                缓冲区,
+                ExePath
             });
             if (File.Exists(config_file))
             {
@@ -110,7 +111,7 @@ namespace Wpf_Scrcpy.ViewModel
                 }
 
             }
-
+            datas1.Find(s => s.命令 == "ExePath").启用 = false;
             _E_Submit = new Lazy<RelayCommand>(() => new RelayCommand(() =>
             {
 
@@ -133,12 +134,12 @@ namespace Wpf_Scrcpy.ViewModel
                         }
                     }
                 }
-                string cmd_str = $"{Path.GetFileNameWithoutExtension(ExePath)} {string.Join(" ", strs1)}";
+                string cmd_str = $"{Path.GetFileNameWithoutExtension(ExePath.指令)} {string.Join(" ", strs1)}";
                 MyLog.MyLog.logclass.info($"提交指令 scrcpy {cmd_str}");
                 cmdHelp.cmdPorcess(cmd_str, (s, s1) =>
                 {
                     MyLog.MyLog.logclass.info(s1.Data);
-                }, $@"cd /d {Path.GetDirectoryName(ExePath)}");
+                }, $@"cd /d {Path.GetDirectoryName(ExePath.指令)}");
                 序列化.序列化.序列化为json文件(config_file, datas1);
             })).Value;
             _getDevices = new RelayCommand(() =>
@@ -154,7 +155,7 @@ namespace Wpf_Scrcpy.ViewModel
                         _Devices1.Add(str.Replace("\tdevice", ""));
                         Devices = _Devices1;
                     }
-                }, $@"cd /d {Path.GetDirectoryName(ExePath)}");
+                }, $@"cd /d {Path.GetDirectoryName(ExePath.指令)}");
             });
             if (IsInDesignMode)
             {

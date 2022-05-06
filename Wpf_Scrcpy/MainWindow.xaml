@@ -24,7 +24,7 @@
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal">
                 <Label Content="程序路径" Style="{DynamicResource lab1}"></Label>
-                <TextBox Width="100" x:Name="ExePath" Text="{Binding ExePath}" ></TextBox>
+                <TextBox Width="100" x:Name="ExePath" Text="{Binding ExePath.指令}" ></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="选择设备" Style="{DynamicResource lab1}"></Label>
