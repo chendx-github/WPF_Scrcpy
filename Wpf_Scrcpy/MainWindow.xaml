@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Wpf_Scrcpy"
         mc:Ignorable="d"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
-        Title="Wpf_Scrcpy" Height="328" Width="424">
+        Title="Wpf_Scrcpy" Height="355" Width="424">
     <Grid>
         <Grid.Resources>
             <Style x:Key="lab1" TargetType="Label" >
@@ -24,7 +24,7 @@
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal">
                 <Label Content="程序路径" Style="{DynamicResource lab1}"></Label>
-                <TextBox Width="100" x:Name="ExePath" Text="{Binding ExePath.指令}" ></TextBox>
+                <TextBox Width="100" x:Name="ExePath" Text="{Binding ExePath.参数}" ></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="选择设备" Style="{DynamicResource lab1}"></Label>
@@ -111,6 +111,16 @@
                     <ComboBoxItem>70</ComboBoxItem>
                     <ComboBoxItem>100</ComboBoxItem>
                     <ComboBoxItem>150</ComboBoxItem>
+                </ComboBox>
+                <TextBox Text="{Binding 参数}" Width="100">
+                </TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" DataContext="{Binding 编码器}">
+                <Label Style="{DynamicResource lab1}">编码器</Label>
+                <ComboBox Text="{Binding 参数}" x:Name="bianma">
+                    <ComboBoxItem>h264</ComboBoxItem>
+                    <ComboBoxItem>h265</ComboBoxItem>
+                    <ComboBoxItem>av1</ComboBoxItem>
                 </ComboBox>
                 <TextBox Text="{Binding 参数}" Width="100">
                 </TextBox>
