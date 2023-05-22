@@ -8,11 +8,9 @@
 有兴趣的也可以进来增加功能  还准备以后开发一些群控  还有界面管理之类的功能
 大家都出一份力可以做的更好
 
-
 至于功能什么的可以看这个页面https://gitee.com/mirrors/scrcpy
 国外的看这里https://github.com/Genymobile/scrcpy/blob/master/README.zh-Hans.md
-
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0301/103628_13fff435_1865390.png "屏幕截图.png")
+![输入图片说明](Wpf_Scrcpy/image.png)
 需要自行下载Scrcpy
 放在 D:\sof\scrcpy-win64-v1.17 这个目录下面
 
