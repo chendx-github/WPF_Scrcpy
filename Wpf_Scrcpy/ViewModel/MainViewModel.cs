@@ -55,7 +55,12 @@ namespace Wpf_Scrcpy.ViewModel
 
         public COMMAND_data 编码器 { get => _编码器; set => Set(ref _编码器, value); }
 
+        COMMAND_data _UHID鼠标 = new COMMAND_data() { 命令 = "UHID键盘", 描述 = "", 指令 = "-M", 参数 = "", 启用 = false };
+        public COMMAND_data UHID鼠标 { get => _UHID鼠标; set => Set(ref _UHID鼠标, value); }
 
+
+        COMMAND_data _UHID键盘 = new COMMAND_data() { 命令 = "UHID键盘", 描述 = "", 指令 = "-K", 参数 = "", 启用 = true };
+        public COMMAND_data UHID键盘 { get => _UHID键盘; set => Set(ref _UHID键盘, value); }
 
         public COMMAND_data 屏幕录制 = new COMMAND_data() { 命令 = "屏幕录制", 描述 = "scrcpy --no-display --record file.mp4\r\nscrcpy -Nr file.mkv\r\n# 按 Ctrl+C 停止录制", 指令 = "-r", 参数 = "", 启用 = false };
         public COMMAND_data SSH_隧道 = new COMMAND_data() { 命令 = "SSH_隧道", 描述 = "ssh -CN -L5037:localhost:5037 -R27183:localhost:27183 your_remote_computer", 指令 = "-CN", 参数 = "", 启用 = false };
@@ -92,6 +97,8 @@ namespace Wpf_Scrcpy.ViewModel
                 SSH_隧道,
                 关闭设备屏幕,
                 保持常亮,
+                UHID鼠标,
+                UHID键盘,
                 只读,
                 全屏,
                 保持窗口在最前,

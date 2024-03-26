@@ -139,6 +139,18 @@
                 </Label>
                 <TextBox Width="100"></TextBox>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" DataContext="{Binding UHID键盘}" >
+                <Label>UHID键盘</Label>
+                <Label>
+                    <CheckBox IsChecked="{Binding 启用}">是</CheckBox>
+                </Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" DataContext="{Binding UHID鼠标}" >
+                <Label>UHID鼠标</Label>
+                <Label>
+                    <CheckBox IsChecked="{Binding 启用}">是</CheckBox>
+                </Label>
+            </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button Width="400" Height="30" Command="{Binding E_Submit}">开始</Button>
             </StackPanel>
