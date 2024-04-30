@@ -10,6 +10,12 @@
 
 至于功能什么的可以看这个页面https://gitee.com/mirrors/scrcpy
 国外的看这里https://github.com/Genymobile/scrcpy
+
+Encapsulate Scrcpy with C # WPF for Android screen casting tools. Originally, there were many other tools available, but I feel that there are still many charges when using them. So, I want to make a rough check myself. Most of the functions Scrcpy are packaged and only need to be created as a front-end management interface. If you are interested, you can come in and add more functions. We are also preparing to develop some group control and interface management functions in the future. Everyone can contribute and do better
+
+As for the functions, you can refer to this page https://gitee.com/mirrors/scrcpy Look here for those from abroad https://github.com/Genymobile/scrcpy
+
+
 ![输入图片说明](image.png)
 需要自行下载Scrcpy
 放在 D:\sof\scrcpy-win64-v1.17 这个目录下面 其实你放哪里都可以，只要自己设置好路径就好了
