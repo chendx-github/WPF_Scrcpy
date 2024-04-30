@@ -9,10 +9,10 @@
 大家都出一份力可以做的更好
 
 至于功能什么的可以看这个页面https://gitee.com/mirrors/scrcpy
-国外的看这里https://github.com/Genymobile/scrcpy/blob/master/README.zh-Hans.md
-![输入图片说明](Wpf_Scrcpy/image.png)
+国外的看这里https://github.com/Genymobile/scrcpy
+![输入图片说明](image.png)
 需要自行下载Scrcpy
-放在 D:\sof\scrcpy-win64-v1.17 这个目录下面
+放在 D:\sof\scrcpy-win64-v1.17 这个目录下面 其实你放哪里都可以，只要自己设置好路径就好了
 
 这个软件的主要特点就是自定义参数  没有限制啥的 都可以自己输入
 
@@ -37,6 +37,12 @@
 2.  新建 Feat_xxx 分支
 3.  提交代码
 4.  新建 Pull Request
+
+#### 更新记录
+2024-4-30 将程序完全打包，懒人可以不用下载打开即可使用
+2024-4-30 增加了 hud键盘鼠标的适配
+
+
 
 
 #### 特技
