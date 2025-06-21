@@ -12,180 +12,330 @@ using Wpf_Scrcpy.Mothod;
 using Mapster.Models;
 using Mapster;
 using System.Linq;
+using Microsoft.Win32;
+using System.Windows;
 
 namespace Wpf_Scrcpy.ViewModel
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-
         public List<COMMAND_data> datas1 = new List<COMMAND_data>();
 
-        COMMAND_data _Éè±¸ = new COMMAND_data() { ÃüÁî = "Éè±¸", ÃèÊö = "Èç¹û adb devices ÁĞ³öÁË¶à¸öÉè±¸£¬Äú±ØĞëÖ¸¶¨Éè±¸µÄ ĞòÁĞºÅ £º", Ö¸Áî = "-s", ²ÎÊı = "", ÆôÓÃ = true };
-        public COMMAND_data Éè±¸ { get => _Éè±¸; set => Set(ref _Éè±¸, value); }
-        COMMAND_data _ÂëÂÊ = new COMMAND_data() { ÃüÁî = "ÂëÂÊ", ÃèÊö = "Ä¬ÈÏÂëÂÊÊÇ 8Mbps¡£Òª¸Ä±äÊÓÆµµÄÂëÂÊ (ÀıÈç¸ÄÎª 1Mbps)£º", Ö¸Áî = "-b", ²ÎÊı = "6M", ÆôÓÃ = true };
-        public COMMAND_data ÂëÂÊ { get => _ÂëÂÊ; set => Set(ref _ÂëÂÊ, value); }
-        COMMAND_data _Ö¡ÂÊ = new COMMAND_data() { ÃüÁî = "Ö¡ÂÊ", ÃèÊö = "", Ö¸Áî = "--max-fps", ²ÎÊı = "100", ÆôÓÃ = true };
-        public COMMAND_data Ö¡ÂÊ { get => _Ö¡ÂÊ; set => Set(ref _Ö¡ÂÊ, value); }
-        COMMAND_data _·Ö±æÂÊ = new COMMAND_data() { ÃüÁî = "·Ö±æÂÊ", ÃèÊö = "", Ö¸Áî = "-m", ²ÎÊı = "512", ÆôÓÃ = true };
-        public COMMAND_data ·Ö±æÂÊ { get => _·Ö±æÂÊ; set => Set(ref _·Ö±æÂÊ, value); }
-        COMMAND_data _»­Ãæ²Ã¼ô = new COMMAND_data() { ÃüÁî = "»­Ãæ²Ã¼ô", ÃèÊö = "", Ö¸Áî = "--crop", ²ÎÊı = "1080:2000:0:0", ÆôÓÃ = false };
-        public COMMAND_data »­Ãæ²Ã¼ô { get => _»­Ãæ²Ã¼ô; set => Set(ref _»­Ãæ²Ã¼ô, value); }
-        COMMAND_data _Ëø¶¨ÆÁÄ»·½Ïò = new COMMAND_data() { ÃüÁî = "Ëø¶¨ÆÁÄ»·½Ïò", ÃèÊö = "", Ö¸Áî = "--lock-video-orientation", ²ÎÊı = 0, ÆôÓÃ = false };
-        public COMMAND_data Ëø¶¨ÆÁÄ»·½Ïò { get => _Ëø¶¨ÆÁÄ»·½Ïò; set => Set(ref _Ëø¶¨ÆÁÄ»·½Ïò, value); }
-        COMMAND_data _»º³åÇø = new COMMAND_data() { ÃüÁî = "»º³åÇø", ÃèÊö = "", Ö¸Áî = "--display-buffer", ²ÎÊı = "50", ÆôÓÃ = true };
-        public COMMAND_data »º³åÇø { get => _»º³åÇø; set => Set(ref _»º³åÇø, value); }
-        COMMAND_data _±£³Ö³£ÁÁ = new COMMAND_data() { ÃüÁî = "±£³Ö³£ÁÁ", ÃèÊö = "", Ö¸Áî = "-w", ²ÎÊı = "", ÆôÓÃ = false };
-        public COMMAND_data ±£³Ö³£ÁÁ { get => _±£³Ö³£ÁÁ; set => Set(ref _±£³Ö³£ÁÁ, value); }
-        COMMAND_data _ExePath = new COMMAND_data() { ÃüÁî = "ExePath", ÃèÊö = "", Ö¸Áî = @"", ²ÎÊı = @"D:\sof\scrcpy-win64-v1.17\scrcpy.exe", ÆôÓÃ = false };
-        public COMMAND_data ExePath  { get => _ExePath; set => Set(ref _ExePath, value);}
-
-        COMMAND_data _±àÂëÆ÷ = new COMMAND_data() { ÃüÁî = "±àÂëÆ÷", ÃèÊö = "¿ÉÒÔÑ¡ÔñÊÓÆµ±à½âÂëÆ÷¡£¿ÉÄÜµÄÖµÎª£ºh264£¨Ä¬ÈÏÖµ£© h265 av1", Ö¸Áî = "--video-codec", ²ÎÊı = "h264", ÆôÓÃ = true };
-
-        public COMMAND_data ±àÂëÆ÷ { get => _±àÂëÆ÷; set => Set(ref _±àÂëÆ÷, value); }
-
-        COMMAND_data _UHIDÊó±ê = new COMMAND_data() { ÃüÁî = "UHID¼üÅÌ", ÃèÊö = "", Ö¸Áî = "-M", ²ÎÊı = "", ÆôÓÃ = false };
-        public COMMAND_data UHIDÊó±ê { get => _UHIDÊó±ê; set => Set(ref _UHIDÊó±ê, value); }
-
-
-        COMMAND_data _UHID¼üÅÌ = new COMMAND_data() { ÃüÁî = "UHID¼üÅÌ", ÃèÊö = "", Ö¸Áî = "-K", ²ÎÊı = "", ÆôÓÃ = true };
-        public COMMAND_data UHID¼üÅÌ { get => _UHID¼üÅÌ; set => Set(ref _UHID¼üÅÌ, value); }
-
-        public COMMAND_data ÆÁÄ»Â¼ÖÆ = new COMMAND_data() { ÃüÁî = "ÆÁÄ»Â¼ÖÆ", ÃèÊö = "scrcpy --no-display --record file.mp4\r\nscrcpy -Nr file.mkv\r\n# °´ Ctrl+C Í£Ö¹Â¼ÖÆ", Ö¸Áî = "-r", ²ÎÊı = "", ÆôÓÃ = false };
-        public COMMAND_data SSH_ËíµÀ = new COMMAND_data() { ÃüÁî = "SSH_ËíµÀ", ÃèÊö = "ssh -CN -L5037:localhost:5037 -R27183:localhost:27183 your_remote_computer", Ö¸Áî = "-CN", ²ÎÊı = "", ÆôÓÃ = false };
-        public COMMAND_data ¹Ø±ÕÉè±¸ÆÁÄ» = new COMMAND_data() { ÃüÁî = "¹Ø±ÕÉè±¸ÆÁÄ»", ÃèÊö = "", Ö¸Áî = "--turn-screen-off", ²ÎÊı = "", ÆôÓÃ = true };
-        public COMMAND_data Ö»¶Á = new COMMAND_data() { ÃüÁî = "Ö»¶Á", ÃèÊö = "", Ö¸Áî = "-n", ²ÎÊı = "", ÆôÓÃ = false };
-        public COMMAND_data È«ÆÁ = new COMMAND_data() { ÃüÁî = "È«ÆÁ", ÃèÊö = "", Ö¸Áî = "-f", ²ÎÊı = "", ÆôÓÃ = false };
-        public COMMAND_data ±£³Ö´°¿ÚÔÚ×îÇ° = new COMMAND_data() { ÃüÁî = "±£³Ö´°¿ÚÔÚ×îÇ°", ÃèÊö = "", Ö¸Áî = "--always-on-top", ²ÎÊı = "", ÆôÓÃ = false };
-        COMMAND_data _ÎŞ±ß¿ò = new COMMAND_data() { ÃüÁî = "ÎŞ±ß¿ò", ÃèÊö = "", Ö¸Áî = "--window-borderless", ²ÎÊı = "", ÆôÓÃ = false };
-        public COMMAND_data ÎŞ±ß¿ò { get => _ÎŞ±ß¿ò; set => Set(ref _ÎŞ±ß¿ò, value); }
-        public COMMAND_data ±êÌâ = new COMMAND_data() { ÃüÁî = "±êÌâ", ÃèÊö = "", Ö¸Áî = "--window-title", ²ÎÊı = "", ÆôÓÃ = false };
-        public COMMAND_data Î»ÖÃºÍ´óĞ¡ = new COMMAND_data() { ÃüÁî = "Î»ÖÃºÍ´óĞ¡", ÃèÊö = "", Ö¸Áî = "--window-x 100 --window-y 100 --window-width 800 --window-height 600", ²ÎÊı = "", ÆôÓÃ = false };
-        public COMMAND_data Ğı×ª = new COMMAND_data() { ÃüÁî = "Ğı×ª", ÃèÊö = "0: ÎŞĞı×ª\r\n1: ÄæÊ±ÕëĞı×ª 90¡ã\r\n2: Ğı×ª 180¡ã\r\n3: Ë³Ê±ÕëĞı×ª 90¡ã", Ö¸Áî = "--rotation", ²ÎÊı = "", ÆôÓÃ = false };
+        // åŸºæœ¬è®¾ç½®
+        COMMAND_data _è®¾å¤‡ = new COMMAND_data() { å‘½ä»¤ = "è®¾å¤‡", æè¿° = "ä½¿ç”¨ adb devices åˆ—å‡ºäº†å¤šä¸ªè®¾å¤‡ï¼Œåˆ™å¿…é¡»æŒ‡å®šè®¾å¤‡ åºåˆ—å·", æŒ‡ä»¤ = "-s", å‚æ•° = "", å¯ç”¨ = true };
+        public COMMAND_data è®¾å¤‡ { get => _è®¾å¤‡; set => Set(ref _è®¾å¤‡, value); }
         
+        COMMAND_data _ç ç‡ = new COMMAND_data() { å‘½ä»¤ = "ç ç‡", æè¿° = "é»˜è®¤ç¼–ç å™¨æ˜¯ 8Mbpsï¼Œè¦æ›´æ”¹è§†é¢‘ç¼–ç å™¨ (ä¾‹å¦‚è®¾ä¸º 1Mbps)", æŒ‡ä»¤ = "-b", å‚æ•° = "8M", å¯ç”¨ = true };
+        public COMMAND_data ç ç‡ { get => _ç ç‡; set => Set(ref _ç ç‡, value); }
+        
+        COMMAND_data _å¸§ç‡ = new COMMAND_data() { å‘½ä»¤ = "å¸§ç‡", æè¿° = "", æŒ‡ä»¤ = "--max-fps", å‚æ•° = "60", å¯ç”¨ = true };
+        public COMMAND_data å¸§ç‡ { get => _å¸§ç‡; set => Set(ref _å¸§ç‡, value); }
+        
+        COMMAND_data _åˆ†è¾¨ç‡ = new COMMAND_data() { å‘½ä»¤ = "åˆ†è¾¨ç‡", æè¿° = "", æŒ‡ä»¤ = "-m", å‚æ•° = "1080", å¯ç”¨ = true };
+        public COMMAND_data åˆ†è¾¨ç‡ { get => _åˆ†è¾¨ç‡; set => Set(ref _åˆ†è¾¨ç‡, value); }
+        
+        COMMAND_data _ç”»é¢è£å‰ª = new COMMAND_data() { å‘½ä»¤ = "ç”»é¢è£å‰ª", æè¿° = "", æŒ‡ä»¤ = "--crop", å‚æ•° = "1080:2000:0:0", å¯ç”¨ = false };
+        public COMMAND_data ç”»é¢è£å‰ª { get => _ç”»é¢è£å‰ª; set => Set(ref _ç”»é¢è£å‰ª, value); }
+        
+        COMMAND_data _é”å®šå±å¹•æ–¹å‘ = new COMMAND_data() { å‘½ä»¤ = "é”å®šå±å¹•æ–¹å‘", æè¿° = "", æŒ‡ä»¤ = "--display-orientation", å‚æ•° = 0, å¯ç”¨ = false };
+        public COMMAND_data é”å®šå±å¹•æ–¹å‘ { get => _é”å®šå±å¹•æ–¹å‘; set => Set(ref _é”å®šå±å¹•æ–¹å‘, value); }
+        
+        COMMAND_data _ç¼“å†²åŒº = new COMMAND_data() { å‘½ä»¤ = "ç¼“å†²åŒº", æè¿° = "", æŒ‡ä»¤ = "--video-buffer", å‚æ•° = "0", å¯ç”¨ = true };
+        public COMMAND_data ç¼“å†²åŒº { get => _ç¼“å†²åŒº; set => Set(ref _ç¼“å†²åŒº, value); }
+        
+        COMMAND_data _ä¿æŒå¸¸äº® = new COMMAND_data() { å‘½ä»¤ = "ä¿æŒå¸¸äº®", æè¿° = "", æŒ‡ä»¤ = "-w", å‚æ•° = "", å¯ç”¨ = false };
+        public COMMAND_data ä¿æŒå¸¸äº® { get => _ä¿æŒå¸¸äº®; set => Set(ref _ä¿æŒå¸¸äº®, value); }
+        
+        COMMAND_data _ExePath = new COMMAND_data() { å‘½ä»¤ = "ExePath", æè¿° = "", æŒ‡ä»¤ = @"", å‚æ•° = @"D:\sof\scrcpy-win64-v1.17\scrcpy.exe", å¯ç”¨ = false };
+        public COMMAND_data ExePath { get => _ExePath; set => Set(ref _ExePath, value); }
+
+        COMMAND_data _ç¼–ç å™¨ = new COMMAND_data() { å‘½ä»¤ = "ç¼–ç å™¨", æè¿° = "é€‰æ‹©è§†é¢‘ç¼–è§£ç å™¨å¯èƒ½çš„å€¼ä¸ºï¼šh264ï¼ˆé»˜è®¤å€¼ï¼‰ h265 av1", æŒ‡ä»¤ = "--video-codec", å‚æ•° = "h264", å¯ç”¨ = true };
+        public COMMAND_data ç¼–ç å™¨ { get => _ç¼–ç å™¨; set => Set(ref _ç¼–ç å™¨, value); }
+
+        COMMAND_data _UHIDé¼ æ ‡ = new COMMAND_data() { å‘½ä»¤ = "UHIDé¼ æ ‡", æè¿° = "", æŒ‡ä»¤ = "-M", å‚æ•° = "", å¯ç”¨ = false };
+        public COMMAND_data UHIDé¼ æ ‡ { get => _UHIDé¼ æ ‡; set => Set(ref _UHIDé¼ æ ‡, value); }
+
+        COMMAND_data _UHIDé”®ç›˜ = new COMMAND_data() { å‘½ä»¤ = "UHIDé”®ç›˜", æè¿° = "", æŒ‡ä»¤ = "-K", å‚æ•° = "", å¯ç”¨ = false };
+        public COMMAND_data UHIDé”®ç›˜ { get => _UHIDé”®ç›˜; set => Set(ref _UHIDé”®ç›˜, value); }
+
+        COMMAND_data _æ— è¾¹æ¡† = new COMMAND_data() { å‘½ä»¤ = "æ— è¾¹æ¡†", æè¿° = "", æŒ‡ä»¤ = "--window-borderless", å‚æ•° = "", å¯ç”¨ = false };
+        public COMMAND_data æ— è¾¹æ¡† { get => _æ— è¾¹æ¡†; set => Set(ref _æ— è¾¹æ¡†, value); }        // æ–°å¢å±æ€§
+        private string _connectionType = "usb";
+        public string ConnectionType 
+        { 
+            get => _connectionType; 
+            set 
+            {
+                Set(ref _connectionType, value);
+                IsWifiConnection = value == "wifi" || value == "tcpip";
+            }
+        }
+
+        private string _ipAddress = "";
+        public string IpAddress { get => _ipAddress; set => Set(ref _ipAddress, value); }
+
+        private string _port = "5555";
+        public string Port { get => _port; set => Set(ref _port, value); }
+
+        private bool _isWifiConnection = false;
+        public bool IsWifiConnection { get => _isWifiConnection; set => Set(ref _isWifiConnection, value); }
+
+        private bool _å¯ç”¨æ§åˆ¶ = true;
+        public bool å¯ç”¨æ§åˆ¶ { get => _å¯ç”¨æ§åˆ¶; set => Set(ref _å¯ç”¨æ§åˆ¶, value); }
+
+        private bool _å¯ç”¨å½•åˆ¶ = false;
+        public bool å¯ç”¨å½•åˆ¶ { get => _å¯ç”¨å½•åˆ¶; set => Set(ref _å¯ç”¨å½•åˆ¶, value); }
+
+        private string _å½•åˆ¶è·¯å¾„ = "";
+        public string å½•åˆ¶è·¯å¾„ { get => _å½•åˆ¶è·¯å¾„; set => Set(ref _å½•åˆ¶è·¯å¾„, value); }
+
+        private string _å½•åˆ¶æ ¼å¼ = "mp4";
+        public string å½•åˆ¶æ ¼å¼ { get => _å½•åˆ¶æ ¼å¼; set => Set(ref _å½•åˆ¶æ ¼å¼, value); }
+
+        private string _statusMessage = "å°±ç»ª";
+        public string StatusMessage { get => _statusMessage; set => Set(ref _statusMessage, value); }
+
+        private int _deviceCount = 0;
+        public int DeviceCount { get => _deviceCount; set => Set(ref _deviceCount, value); }
+
+        // æ–°å¢çš„å¿«æ·è®¾ç½®å±æ€§
+        public COMMAND_data å…¨å± = new COMMAND_data() { å‘½ä»¤ = "å…¨å±", æè¿° = "", æŒ‡ä»¤ = "-f", å‚æ•° = "", å¯ç”¨ = false };
+        public COMMAND_data çª—å£ç½®é¡¶ = new COMMAND_data() { å‘½ä»¤ = "çª—å£ç½®é¡¶", æè¿° = "", æŒ‡ä»¤ = "--always-on-top", å‚æ•° = "", å¯ç”¨ = false };
+        public COMMAND_data å…³é—­è®¾å¤‡å±å¹• = new COMMAND_data() { å‘½ä»¤ = "å…³é—­è®¾å¤‡å±å¹•", æè¿° = "", æŒ‡ä»¤ = "-S", å‚æ•° = "", å¯ç”¨ = false };
+        public COMMAND_data æ˜¾ç¤ºè§¦æ‘¸ = new COMMAND_data() { å‘½ä»¤ = "æ˜¾ç¤ºè§¦æ‘¸", æè¿° = "", æŒ‡ä»¤ = "-t", å‚æ•° = "", å¯ç”¨ = false };
+
         List<string> _Devices = new List<string>();
-        List<string> _Devices1 = new List<string>();
-        public List<string> Devices { get => _Devices; set => Set(ref _Devices, value); }
-        string _device = "";
-        public string device { get => _device; set => Set(ref _device, value); }
-        string config_file = "config.json";
+        public List<string> Devices { get => _Devices; set => Set(ref _Devices, value); }        string config_file = "config.json";
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         public MainViewModel()
         {
+            
             datas1.AddRange(new[]{
-                Éè±¸,
-                ÂëÂÊ,
-                Ö¡ÂÊ,
-                ·Ö±æÂÊ,
-                »­Ãæ²Ã¼ô,
-                Ëø¶¨ÆÁÄ»·½Ïò,
-                ±àÂëÆ÷,
-                ÆÁÄ»Â¼ÖÆ,
-                SSH_ËíµÀ,
-                ¹Ø±ÕÉè±¸ÆÁÄ»,
-                ±£³Ö³£ÁÁ,
-                UHIDÊó±ê,
-                UHID¼üÅÌ,
-                Ö»¶Á,
-                È«ÆÁ,
-                ±£³Ö´°¿ÚÔÚ×îÇ°,
-                ÎŞ±ß¿ò,
-                ±êÌâ,
-                Î»ÖÃºÍ´óĞ¡,
-                Ğı×ª,
-                »º³åÇø,
-                ExePath
+                è®¾å¤‡,
+                ç ç‡,
+                å¸§ç‡,
+                åˆ†è¾¨ç‡,
+                ç”»é¢è£å‰ª,
+                é”å®šå±å¹•æ–¹å‘,
+                ç¼“å†²åŒº,
+                ä¿æŒå¸¸äº®,
+                UHIDé¼ æ ‡,
+                UHIDé”®ç›˜,
+                æ— è¾¹æ¡†,
+                ç¼–ç å™¨,
+                ExePath,
+                å…¨å±,
+                çª—å£ç½®é¡¶,
+                å…³é—­è®¾å¤‡å±å¹•,
+                æ˜¾ç¤ºè§¦æ‘¸
             });
+
+            InitializeCommands();
+            LoadConfiguration();
+        }
+
+        private void InitializeCommands()
+        {
+            _E_Submit = new Lazy<RelayCommand>(() => new RelayCommand(() =>
+            {
+                try
+                {
+                    StatusMessage = "æ­£åœ¨å¯åŠ¨...";
+                    List<string> strs1 = new List<string>();
+
+                    // å¤„ç†è¿æ¥æ–¹å¼
+                    if (ConnectionType == "wifi" && !string.IsNullOrEmpty(IpAddress))
+                    {
+                        strs1.Add($"--tcpip={IpAddress}:{Port}");
+                    }
+
+                    // å¤„ç†è®¾å¤‡é€‰æ‹©
+                    if (!string.IsNullOrEmpty(è®¾å¤‡.å‚æ•°))
+                    {
+                        strs1.Add($"-s {è®¾å¤‡.å‚æ•°}");
+                    }
+
+                    // å¤„ç†æ§åˆ¶æ¨¡å¼
+                    if (!å¯ç”¨æ§åˆ¶)
+                    {
+                        strs1.Add("-n");
+                    }                    // å¤„ç†å½•åˆ¶
+                    if (å¯ç”¨å½•åˆ¶ && !string.IsNullOrEmpty(å½•åˆ¶è·¯å¾„))
+                    {
+                        string recordFile = å½•åˆ¶è·¯å¾„;
+                        if (!Path.HasExtension(recordFile))
+                        {
+                            recordFile += $".{å½•åˆ¶æ ¼å¼}";
+                        }
+                        strs1.Add($"-r \"{recordFile}\"");
+                    }
+
+                    foreach (var item in datas1)
+                    {
+                        if (item.å¯ç”¨)
+                        {
+                            if (item == è®¾å¤‡ && string.IsNullOrEmpty(item.å‚æ•°))
+                            {
+                                continue;
+                            }
+
+                            if (!string.IsNullOrEmpty(item.å‚æ•°.ToString()))
+                            {
+                                strs1.Add($"{item.æŒ‡ä»¤} {item.å‚æ•°}");
+                            }
+                            else
+                            {
+                                strs1.Add(item.æŒ‡ä»¤);
+                            }
+                        }
+                    }
+
+                    string cmd_str = $"{Path.GetFileNameWithoutExtension(ExePath.å‚æ•°)} {string.Join(" ", strs1)}";
+                    MyLog.MyLog.logclass.info($"æäº¤æŒ‡ä»¤ scrcpy {cmd_str}");
+                    
+                    cmdHelp.cmdPorcess(cmd_str, (s, s1) =>
+                    {
+                        MyLog.MyLog.logclass.info(s1.Data);
+                    }, $@"cd /d {Path.GetDirectoryName(ExePath.å‚æ•°)}");
+                    
+                    StatusMessage = "å·²å¯åŠ¨";
+                    SaveConfiguration();
+                }
+                catch (Exception ex)
+                {
+                    StatusMessage = "å¯åŠ¨å¤±è´¥: " + ex.Message;
+                    MessageBox.Show($"å¯åŠ¨å¤±è´¥: {ex.Message}", "é”™è¯¯", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            })).Value;
+
+            _getDevices = new RelayCommand(() =>
+            {
+                try
+                {
+                    StatusMessage = "æ­£åœ¨æ‰«æè®¾å¤‡...";
+                    var deviceList = new List<string>();
+                    string cmd_str = "adb devices";
+                    
+                    cmdHelp.cmdPorcess(cmd_str, (s, s1) =>
+                    {
+                        string str = s1.Data;
+                        MyLog.MyLog.logclass.info(str);
+                        if (str != null && Regex.IsMatch(str, @"\tdevice$"))
+                        {
+                            deviceList.Add(str.Replace("\tdevice", ""));
+                        }
+                    }, $@"cd /d {Path.GetDirectoryName(ExePath.å‚æ•°)}");
+                    
+                    Devices = deviceList;
+                    DeviceCount = deviceList.Count;
+                    StatusMessage = $"å‘ç° {deviceList.Count} ä¸ªè®¾å¤‡";
+                }
+                catch (Exception ex)
+                {
+                    StatusMessage = "æ‰«æè®¾å¤‡å¤±è´¥";
+                    MessageBox.Show($"æ‰«æè®¾å¤‡å¤±è´¥: {ex.Message}", "é”™è¯¯", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+
+            BrowseExePathCommand = new RelayCommand(() =>
+            {
+                var dialog = new OpenFileDialog()
+                {
+                    Title = "é€‰æ‹© scrcpy.exe æ–‡ä»¶",
+                    Filter = "å¯æ‰§è¡Œæ–‡ä»¶ (*.exe)|*.exe|æ‰€æœ‰æ–‡ä»¶ (*.*)|*.*",
+                    CheckFileExists = true
+                };
+
+                if (dialog.ShowDialog() == true)
+                {
+                    ExePath.å‚æ•° = dialog.FileName;
+                }
+            });
+
+            BrowseRecordPathCommand = new RelayCommand(() =>
+            {
+                var dialog = new SaveFileDialog()
+                {
+                    Title = "é€‰æ‹©å½•åˆ¶æ–‡ä»¶ä¿å­˜ä½ç½®",
+                    Filter = "MP4 æ–‡ä»¶ (*.mp4)|*.mp4|MKV æ–‡ä»¶ (*.mkv)|*.mkv|æ‰€æœ‰æ–‡ä»¶ (*.*)|*.*",
+                    DefaultExt = å½•åˆ¶æ ¼å¼
+                };
+
+                if (dialog.ShowDialog() == true)
+                {
+                    å½•åˆ¶è·¯å¾„ = dialog.FileName;
+                }            });
+
+            ShowHelpCommand = new RelayCommand(() =>
+            {
+                var helpText = "Scrcpy ä½¿ç”¨è¯´æ˜ï¼š\n\n" +
+                    "1. è®¾å¤‡è¿æ¥ï¼š\n" +
+                    "   - USBè¿æ¥ï¼šç›´æ¥è¿æ¥è®¾å¤‡ï¼Œå¯ç”¨USBè°ƒè¯•\n" +
+                    "   - WiFiè¿æ¥ï¼šè®¾å¤‡ä¸ç”µè„‘åœ¨åŒä¸€ç½‘ç»œï¼Œè¾“å…¥è®¾å¤‡IPåœ°å€\n\n" +
+                    "2. å¸¸ç”¨å¿«æ·é”®ï¼š\n" +
+                    "   - Ctrl+F: å…¨å±\n" +
+                    "   - Ctrl+G: è°ƒæ•´çª—å£å¤§å°\n" +
+                    "   - Ctrl+H: è¿”å›é”®\n" +
+                    "   - Ctrl+S: åˆ‡æ¢åº”ç”¨\n" +
+                    "   - Ctrl+M: èœå•é”®\n" +
+                    "   - Ctrl+P: ç”µæºé”®\n\n" +
+                    "3. å½•åˆ¶åŠŸèƒ½ï¼š\n" +
+                    "   - å‹¾é€‰å¯ç”¨å½•åˆ¶ï¼Œé€‰æ‹©ä¿å­˜è·¯å¾„\n" +
+                    "   - æ”¯æŒ MP4ã€MKV ç­‰æ ¼å¼\n\n" +
+                    "4. é«˜çº§è®¾ç½®ï¼š\n" +
+                    "   - éŸ³é¢‘è®¾ç½®ã€ç›¸æœºæ§åˆ¶ã€ç½‘ç»œé…ç½®ç­‰\n" +
+                    "   - ç‚¹å‡»'é«˜çº§è®¾ç½®'æŒ‰é’®è¿›è¡Œé…ç½®\n\n" +
+                    "æ›´å¤šä¿¡æ¯è¯·è®¿é—®ï¼šhttps://github.com/Genymobile/scrcpy";
+
+                MessageBox.Show(helpText, "å¸®åŠ©", MessageBoxButton.OK, MessageBoxImage.Information);
+            });        }
+
+        private void LoadConfiguration()
+        {
             if (File.Exists(config_file))
             {
                 try
                 {
-                    var a001 = ĞòÁĞ»¯.ĞòÁĞ»¯.jsonÎÄ¼ş·´ĞòÁĞ»¯<List<COMMAND_data>>(config_file);
+                    var a001 = åºåˆ—åŒ–.åºåˆ—åŒ–.jsonæ–‡ä»¶ååºåˆ—åŒ–<List<COMMAND_data>>(config_file);
                     var config1 = new TypeAdapterConfig() { };
-                    config1.ForType<COMMAND_data, COMMAND_data>().Ignore(s => s.Ö¸Áî,s => s.ÆôÓÃ);
+                    config1.ForType<COMMAND_data, COMMAND_data>().Ignore(s => s.æŒ‡ä»¤, s => s.æè¿°);
                     datas1.ForEach(s =>
                     {
-                        a001.Find(s1 => s1.ÃüÁî == s.ÃüÁî)?.Adapt(s, config1);
+                        a001.Find(s1 => s1.å‘½ä»¤ == s.å‘½ä»¤)?.Adapt(s, config1);
                     });
-                }
-                catch (Exception)
+                }                catch (Exception)
                 {
+                    StatusMessage = "é…ç½®åŠ è½½å¤±è´¥";
                 }
-
             }
-            datas1.Find(s => s.ÃüÁî == "ExePath").ÆôÓÃ = false;
-            _E_Submit = new Lazy<RelayCommand>(() => new RelayCommand(() =>
-            {
+            datas1.Find(s => s.å‘½ä»¤ == "ExePath").å¯ç”¨ = false;
+        }
 
-                List<string> strs1 = new List<string>();
-                foreach (var item in datas1)
-                {
-                    if (item.ÆôÓÃ)
-                    {
-                        if (item == Éè±¸ && item.²ÎÊı == "")
-                        {
-                            continue;
-                        }
-                        //if (new string[] { "±àÂëÆ÷", "»º³åÇø" }.Contains(item.ÃüÁî) && !string.IsNullOrEmpty(item.²ÎÊı))
-                        //{
-                        //    strs1.Add($"{item.Ö¸Áî}={item.²ÎÊı}");
-                        //}
-                        else
-                        {
-                            strs1.Add($"{item.Ö¸Áî} {item.²ÎÊı}");
-                        }
-                    }
-                }
-                string cmd_str = $"{Path.GetFileNameWithoutExtension(ExePath.²ÎÊı)} {string.Join(" ", strs1)}";
-                MyLog.MyLog.logclass.info($"Ìá½»Ö¸Áî scrcpy {cmd_str}");
-                cmdHelp.cmdPorcess(cmd_str, (s, s1) =>
-                {
-                    MyLog.MyLog.logclass.info(s1.Data);
-                }, $@"cd /d {Path.GetDirectoryName(ExePath.²ÎÊı)}");
-                ĞòÁĞ»¯.ĞòÁĞ»¯.ĞòÁĞ»¯ÎªjsonÎÄ¼ş(config_file, datas1);
-            })).Value;
-            _getDevices = new RelayCommand(() =>
+        private void SaveConfiguration()
+        {
+            try
             {
-                _Devices1 = new List<string>();
-                string cmd_str = "adb devices";
-                cmdHelp.cmdPorcess(cmd_str, (s, s1) =>
-                {
-                    string str = s1.Data;
-                    MyLog.MyLog.logclass.info(str);
-                    if (str != null && Regex.IsMatch(str, @"\tdevice$"))
-                    {
-                        _Devices1.Add(str.Replace("\tdevice", ""));
-                        Devices = _Devices1;
-                    }
-                }, $@"cd /d {Path.GetDirectoryName(ExePath.²ÎÊı)}");
-            });
-            if (IsInDesignMode)
-            {
-                // Code runs in Blend --> create design time data.
+                åºåˆ—åŒ–.åºåˆ—åŒ–.åºåˆ—åŒ–ä¸ºjsonæ–‡ä»¶(config_file, datas1);
             }
-            else
+            catch (Exception ex)
             {
-                // Code runs "for real"
+                MyLog.MyLog.logclass.error($"ä¿å­˜é…ç½®å¤±è´¥: {ex.Message}");
             }
         }
 
+        // Commands
         RelayCommand _E_Submit = null;
         public RelayCommand E_Submit { get => _E_Submit; set => Set(ref _E_Submit, value); }
+        
         RelayCommand _getDevices = null;
-        public RelayCommand getDevices { get => _getDevices; set => Set(ref _getDevices, value); }
-
+        public RelayCommand getDevices { get => _getDevices; set => Set(ref _getDevices, value); }        public RelayCommand BrowseExePathCommand { get; set; }
+        public RelayCommand BrowseRecordPathCommand { get; set; }
+        public RelayCommand ShowHelpCommand { get; set; }
     }
 }

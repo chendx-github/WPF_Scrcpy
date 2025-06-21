@@ -6,154 +6,308 @@
         xmlns:local="clr-namespace:Wpf_Scrcpy"
         mc:Ignorable="d"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
-        Title="Wpf_Scrcpy" Height="355" Width="424">
+        Title="Scrcpy 控制台" Height="650" Width="600"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize">
+    <Window.Resources>
+        <!-- 使用内置的转换器 -->
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        
+        <!-- 现代化样式定义 -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF0078D4"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF106EBE"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF005A9E"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#FFCCCCCC"/>
+                                <Setter Property="Foreground" Value="#FF666666"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#FF6C757D"/>
+        </Style>
+
+        <Style x:Key="SuccessButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#FF28A745"/>
+        </Style>
+
+        <Style x:Key="GroupBoxStyle" TargetType="GroupBox">
+            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BorderBrush" Value="#FFDDDDDD"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+        </Style>
+
+        <Style x:Key="ControlStyle" TargetType="Control">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Margin" Value="5,2"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="ComboBoxStyle" TargetType="ComboBox" BasedOn="{StaticResource ControlStyle}">
+            <Setter Property="IsEditable" Value="True"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <Grid.Resources>
-            <Style x:Key="lab1" TargetType="Label" >
-                <Setter Property="Width" Value="100px"></Setter>
-            </Style>
-        </Grid.Resources>
-        <StackPanel>
-            <StackPanel.Resources>
-                <Style TargetType="ComboBox">
-                    <Setter Property="Width" Value="100"></Setter>
-                </Style>
-                <Style TargetType="TextBox">
-                    <Setter Property="Width" Value="100"></Setter>
-                </Style>
-            </StackPanel.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 标题栏 -->
+        <Border Grid.Row="0" Background="#FF0078D4" Padding="15,10">
+            <StackPanel>
+                <TextBlock Text="Scrcpy Android 屏幕镜像工具" 
+                           FontSize="20" FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="简单易用的Android设备屏幕投射与控制工具" 
+                           FontSize="12" Foreground="#FFE1E1E1" Margin="0,2,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 主要设置区域 -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="10">
+            <StackPanel>
+                
+                <!-- 设备连接设置 -->
+                <GroupBox Header="📱 设备连接" Style="{StaticResource GroupBoxStyle}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Label Content="Scrcpy路径:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding ExePath.参数}" 
+                                     ToolTip="scrcpy.exe 程序路径"/>
+                            <Button Content="..." Width="30" Height="28" Margin="5,0" 
+                                    Command="{Binding BrowseExePathCommand}"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Label Content="连接设备:" Style="{StaticResource LabelStyle}"/>
+                            <ComboBox Style="{StaticResource ComboBoxStyle}" 
+                                      ItemsSource="{Binding Devices}" 
+                                      SelectedValue="{Binding 设备.参数}"
+                                      IsEditable="True"
+                                      ToolTip="选择或输入设备序列号"/>
+                            <Button Content="刷新设备" Height="28" Margin="5,0" 
+                                    Command="{Binding getDevices}" 
+                                    Style="{StaticResource SecondaryButtonStyle}"/>
+                        </StackPanel>                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Label Content="连接方式:" Style="{StaticResource LabelStyle}"/>
+                            <ComboBox Style="{StaticResource ComboBoxStyle}" SelectedValue="{Binding ConnectionType}">
+                                <ComboBoxItem Content="USB连接" Tag="usb"/>
+                                <ComboBoxItem Content="WiFi连接" Tag="wifi"/>
+                            </ComboBox>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Label Content="设备IP:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding IpAddress}" 
+                                     ToolTip="WiFi连接时输入设备IP地址，例如: 192.168.1.100"/>
+                            <Label Content="端口:" Width="40" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding Port}" Width="80"
+                                     ToolTip="端口号，默认: 5555"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 视频质量设置 -->
+                <GroupBox Header="🎥 视频质量" Style="{StaticResource GroupBoxStyle}">
+                    <StackPanel>                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Label Content="最大分辨率:" Style="{StaticResource LabelStyle}"/>
+                            <ComboBox Style="{StaticResource ComboBoxStyle}" Text="{Binding 分辨率.参数}">
+                                <ComboBoxItem>不限制</ComboBoxItem>
+                                <ComboBoxItem>480</ComboBoxItem>
+                                <ComboBoxItem>720</ComboBoxItem>
+                                <ComboBoxItem>1080</ComboBoxItem>
+                                <ComboBoxItem>1440</ComboBoxItem>
+                                <ComboBoxItem>1600</ComboBoxItem>
+                                <ComboBoxItem>2160</ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock Text="px" VerticalAlignment="Center" Margin="5,0"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Label Content="视频码率:" Style="{StaticResource LabelStyle}"/>
+                            <ComboBox Style="{StaticResource ComboBoxStyle}" Text="{Binding 码率.参数}">
+                                <ComboBoxItem>1M</ComboBoxItem>
+                                <ComboBoxItem>2M</ComboBoxItem>
+                                <ComboBoxItem>4M</ComboBoxItem>
+                                <ComboBoxItem>6M</ComboBoxItem>
+                                <ComboBoxItem>8M</ComboBoxItem>
+                                <ComboBoxItem>10M</ComboBoxItem>
+                                <ComboBoxItem>15M</ComboBoxItem>
+                                <ComboBoxItem>20M</ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock Text="默认推荐: 8M" VerticalAlignment="Center" Margin="5,0" 
+                                       Foreground="Gray" FontSize="11"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Label Content="最大帧率:" Style="{StaticResource LabelStyle}"/>
+                            <ComboBox Style="{StaticResource ComboBoxStyle}" Text="{Binding 帧率.参数}">
+                                <ComboBoxItem>不限制</ComboBoxItem>
+                                <ComboBoxItem>15</ComboBoxItem>
+                                <ComboBoxItem>30</ComboBoxItem>
+                                <ComboBoxItem>60</ComboBoxItem>
+                                <ComboBoxItem>120</ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock Text="fps" VerticalAlignment="Center" Margin="5,0"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Label Content="视频编码器:" Style="{StaticResource LabelStyle}"/>
+                            <ComboBox Style="{StaticResource ComboBoxStyle}" Text="{Binding 编码器.参数}">
+                                <ComboBoxItem>h264</ComboBoxItem>
+                                <ComboBoxItem>h265</ComboBoxItem>
+                                <ComboBoxItem>av1</ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock Text="推荐: h264" VerticalAlignment="Center" Margin="5,0" 
+                                       Foreground="Gray" FontSize="11"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 显示控制设置 -->
+                <GroupBox Header="📺 显示控制" Style="{StaticResource GroupBoxStyle}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Label Content="屏幕方向:" Style="{StaticResource LabelStyle}"/>
+                            <ComboBox Style="{StaticResource ComboBoxStyle}" SelectedIndex="{Binding 锁定屏幕方向.参数}">
+                                <ComboBoxItem>自动旋转</ComboBoxItem>
+                                <ComboBoxItem>竖屏</ComboBoxItem>
+                                <ComboBoxItem>倒转竖屏</ComboBoxItem>
+                                <ComboBoxItem>横屏</ComboBoxItem>
+                                <ComboBoxItem>倒转横屏</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <CheckBox Content="全屏启动" IsChecked="{Binding 全屏.启用}" 
+                                      VerticalAlignment="Center" Width="120"/>
+                            <CheckBox Content="无边框窗口" IsChecked="{Binding 无边框.启用}" 
+                                      VerticalAlignment="Center" Width="120"/>
+                            <CheckBox Content="窗口置顶" IsChecked="{Binding 窗口置顶.启用}" 
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <CheckBox Content="关闭设备屏幕" IsChecked="{Binding 关闭设备屏幕.启用}" 
+                                      VerticalAlignment="Center" Width="120"
+                                      ToolTip="启动时关闭设备屏幕，节省电量"/>
+                            <CheckBox Content="显示触摸" IsChecked="{Binding 显示触摸.启用}" 
+                                      VerticalAlignment="Center" Width="120"
+                                      ToolTip="在设备上显示触摸点"/>
+                            <CheckBox Content="保持常亮" IsChecked="{Binding 保持常亮.启用}" 
+                                      VerticalAlignment="Center"
+                                      ToolTip="防止设备自动锁屏"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 输入控制设置 -->
+                <GroupBox Header="🎮 输入控制" Style="{StaticResource GroupBoxStyle}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <CheckBox Content="启用控制" IsChecked="{Binding 启用控制}" 
+                                      VerticalAlignment="Center" Width="120"
+                                      ToolTip="取消勾选则为只读模式"/>
+                            <CheckBox Content="UHID键盘模式" IsChecked="{Binding UHID键盘.启用}" 
+                                      VerticalAlignment="Center" Width="120"
+                                      ToolTip="更好的键盘兼容性"/>
+                            <CheckBox Content="UHID鼠标模式" IsChecked="{Binding UHID鼠标.启用}" 
+                                      VerticalAlignment="Center"
+                                      ToolTip="更好的鼠标兼容性"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 录制设置 -->
+                <GroupBox Header="📹 录制设置" Style="{StaticResource GroupBoxStyle}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <CheckBox Content="启用录制" IsChecked="{Binding 启用录制}" 
+                                      VerticalAlignment="Center" Width="120"/>
+                            <Label Content="保存路径:" Style="{StaticResource LabelStyle}" Width="80"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding 录制路径}" Width="200"
+                                     IsEnabled="{Binding 启用录制}"/>
+                            <Button Content="..." Width="30" Height="28" Margin="5,0" 
+                                    Command="{Binding BrowseRecordPathCommand}"
+                                    IsEnabled="{Binding 启用录制}"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Label Content="录制格式:" Style="{StaticResource LabelStyle}"/>
+                            <ComboBox Style="{StaticResource ComboBoxStyle}" SelectedValue="{Binding 录制格式}"
+                                      IsEnabled="{Binding 启用录制}">
+                                <ComboBoxItem Content="MP4 (推荐)" Tag="mp4"/>
+                                <ComboBoxItem Content="MKV" Tag="mkv"/>
+                                <ComboBoxItem Content="AVI" Tag="avi"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+            </StackPanel>
+        </ScrollViewer>        <!-- 操作按钮区域 -->
+        <Border Grid.Row="2" Background="#FFF5F5F5" Padding="15,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="▶ 开始镜像" Width="120" Height="40" Margin="5"
+                        Command="{Binding E_Submit}" 
+                        Style="{StaticResource SuccessButtonStyle}"/>
+                <Button Content="📋 查看设备" Width="120" Height="40" Margin="5"
+                        Command="{Binding getDevices}" 
+                        Style="{StaticResource SecondaryButtonStyle}"/>
+                <Button Content="❓ 帮助" Width="80" Height="40" Margin="5"
+                        Command="{Binding ShowHelpCommand}" 
+                        Style="{StaticResource SecondaryButtonStyle}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 状态栏 -->
+        <Border Grid.Row="3" Background="#FF263238" Padding="10,5">
             <StackPanel Orientation="Horizontal">
-                <Label Content="程序路径" Style="{DynamicResource lab1}"></Label>
-                <TextBox Width="100" x:Name="ExePath" Text="{Binding ExePath.参数}" ></TextBox>
+                <TextBlock Text="状态:" Foreground="White" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding StatusMessage}" Foreground="#FF4CAF50" 
+                           VerticalAlignment="Center" Margin="5,0"/>
+                <TextBlock Text="  |  " Foreground="Gray" VerticalAlignment="Center"/>
+                <TextBlock Text="连接设备数:" Foreground="White" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding DeviceCount}" Foreground="#FF2196F3" 
+                           VerticalAlignment="Center" Margin="5,0"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="选择设备" Style="{DynamicResource lab1}"></Label>
-                <ComboBox ItemsSource="{Binding Devices}" SelectedValue="{Binding 设备.参数}" >
-                </ComboBox>
-                <TextBox Width="100" x:Name="Device_txt" DataContext="{Binding 设备}" Text="{Binding 参数}" ></TextBox>
-                <Button Command="{Binding getDevices}">查看连接设备</Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding 分辨率}">
-                <Label Content="分辨率" Style="{DynamicResource lab1}"></Label>
-                <ComboBox Text="{Binding 参数}">
-                    <ComboBoxItem>128</ComboBoxItem>
-                    <ComboBoxItem>256</ComboBoxItem>
-                    <ComboBoxItem>512</ComboBoxItem>
-                    <ComboBoxItem>640</ComboBoxItem>
-                    <ComboBoxItem>720</ComboBoxItem>
-                    <ComboBoxItem>1080</ComboBoxItem>
-                    <ComboBoxItem>1600</ComboBoxItem>
-                </ComboBox>
-                <TextBox Width="100" Text="{Binding 参数}"></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding 码率}">
-                <Label  Style="{DynamicResource lab1}">码率</Label>
-                <ComboBox Text="{Binding 参数}">
-                    <ComboBoxItem>100K</ComboBoxItem>
-                    <ComboBoxItem>200K</ComboBoxItem>
-                    <ComboBoxItem>300K</ComboBoxItem>
-                    <ComboBoxItem>500K</ComboBoxItem>
-                    <ComboBoxItem>800K</ComboBoxItem>
-                    <ComboBoxItem>1M</ComboBoxItem>
-                    <ComboBoxItem>2M</ComboBoxItem>
-                    <ComboBoxItem>3M</ComboBoxItem>
-                    <ComboBoxItem>4M</ComboBoxItem>
-                    <ComboBoxItem>5M</ComboBoxItem>
-                    <ComboBoxItem>6M</ComboBoxItem>
-                    <ComboBoxItem>8M</ComboBoxItem>
-                    <ComboBoxItem>10M</ComboBoxItem>
-                    <ComboBoxItem>20M</ComboBoxItem>
-                    <ComboBoxItem>60M</ComboBoxItem>
-                </ComboBox>
-                <TextBox Text="{Binding 参数}"></TextBox>
-                <Label>K/M</Label>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding 帧率}">
-                <Label Style="{DynamicResource lab1}">帧率</Label>
-                <ComboBox Text="{Binding 参数}">
-                    <ComboBoxItem>0</ComboBoxItem>
-                    <ComboBoxItem>1</ComboBoxItem>
-                    <ComboBoxItem>4</ComboBoxItem>
-                    <ComboBoxItem>10</ComboBoxItem>
-                    <ComboBoxItem>15</ComboBoxItem>
-                    <ComboBoxItem>25</ComboBoxItem>
-                    <ComboBoxItem>35</ComboBoxItem>
-                    <ComboBoxItem>45</ComboBoxItem>
-                    <ComboBoxItem>60</ComboBoxItem>
-                    <ComboBoxItem>144</ComboBoxItem>
-                </ComboBox>
-                <TextBox Width="100" Text="{Binding 参数}"></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding 画面裁剪}">
-                <Label>
-                    <CheckBox IsChecked="{Binding 启用}">启用</CheckBox>
-                </Label>
-                <Label>画面裁剪</Label>
-                <TextBox Width="100" Text="{Binding 参数}"></TextBox>
-                <Label>以 (0,0) 为原点的 1224x1440 像素</Label>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding 锁定屏幕方向}">
-                <Label Style="{DynamicResource lab1}">锁定屏幕方向</Label>
-                <ComboBox SelectedIndex="{Binding 参数}" x:Name="fangxiang">
-                    <ComboBoxItem>自然方向</ComboBoxItem>
-                    <ComboBoxItem>逆时针旋转 90°</ComboBoxItem>
-                    <ComboBoxItem>180°</ComboBoxItem>
-                    <ComboBoxItem>顺时针旋转 90°</ComboBoxItem>
-                </ComboBox>
-                <TextBox Text="{Binding SelectedIndex,ElementName=fangxiang}" Width="100">
-                </TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding 缓冲区}">
-                <Label Style="{DynamicResource lab1}">缓冲区</Label>
-                <ComboBox Text="{Binding 参数}" x:Name="huanchong">
-                    <ComboBoxItem>10</ComboBoxItem>
-                    <ComboBoxItem>50</ComboBoxItem>
-                    <ComboBoxItem>70</ComboBoxItem>
-                    <ComboBoxItem>100</ComboBoxItem>
-                    <ComboBoxItem>150</ComboBoxItem>
-                </ComboBox>
-                <TextBox Text="{Binding 参数}" Width="100">
-                </TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding 编码器}">
-                <Label Style="{DynamicResource lab1}">编码器</Label>
-                <ComboBox Text="{Binding 参数}" x:Name="bianma">
-                    <ComboBoxItem>h264</ComboBoxItem>
-                    <ComboBoxItem>h265</ComboBoxItem>
-                    <ComboBoxItem>av1</ComboBoxItem>
-                </ComboBox>
-                <TextBox Text="{Binding 参数}" Width="100">
-                </TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding 无边框}">
-                <Label>无边框</Label>
-                <Label>
-                    <CheckBox IsChecked="{Binding 启用}">是</CheckBox>
-                </Label>
-                <TextBox Width="100"></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding 保持常亮}">
-                <Label>常亮</Label>
-                <Label>
-                    <CheckBox IsChecked="{Binding 启用}">是</CheckBox>
-                </Label>
-                <TextBox Width="100"></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding UHID键盘}" >
-                <Label>UHID键盘</Label>
-                <Label>
-                    <CheckBox IsChecked="{Binding 启用}">是</CheckBox>
-                </Label>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding UHID鼠标}" >
-                <Label>UHID鼠标</Label>
-                <Label>
-                    <CheckBox IsChecked="{Binding 启用}">是</CheckBox>
-                </Label>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Width="400" Height="30" Command="{Binding E_Submit}">开始</Button>
-            </StackPanel>
-        </StackPanel>
+        </Border>
     </Grid>
 </Window>

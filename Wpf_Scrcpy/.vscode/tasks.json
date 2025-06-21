@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build WPF Project",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"Wpf_Scrcpy.sln",
+				"--configuration",
+				"Debug"
+			],
+			"group": "build",
+			"isBackground": false,
+			"problemMatcher": [
+				"$msCompile"
+			]
+		}
+	]
+}
