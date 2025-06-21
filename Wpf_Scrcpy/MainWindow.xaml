@@ -187,8 +187,7 @@
                             </ComboBox>
                             <TextBlock Text="fps" VerticalAlignment="Center" Margin="5,0"/>
                         </StackPanel>
-                        
-                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                          <StackPanel Orientation="Horizontal" Margin="0,5">
                             <Label Content="视频编码器:" Style="{StaticResource LabelStyle}"/>
                             <ComboBox Style="{StaticResource ComboBoxStyle}" Text="{Binding 编码器.参数}">
                                 <ComboBoxItem>h264</ComboBoxItem>
@@ -196,6 +195,19 @@
                                 <ComboBoxItem>av1</ComboBoxItem>
                             </ComboBox>
                             <TextBlock Text="推荐: h264" VerticalAlignment="Center" Margin="5,0" 
+                                       Foreground="Gray" FontSize="11"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Label Content="视频缓冲:" Style="{StaticResource LabelStyle}"/>
+                            <ComboBox Style="{StaticResource ComboBoxStyle}" Text="{Binding 缓冲区.参数}">
+                                <ComboBoxItem>0</ComboBoxItem>
+                                <ComboBoxItem>10</ComboBoxItem>
+                                <ComboBoxItem>20</ComboBoxItem>
+                                <ComboBoxItem>50</ComboBoxItem>
+                                <ComboBoxItem>100</ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock Text="ms (0=无缓冲)" VerticalAlignment="Center" Margin="5,0" 
                                        Foreground="Gray" FontSize="11"/>
                         </StackPanel>
                     </StackPanel>
@@ -236,9 +248,7 @@
                                       ToolTip="防止设备自动锁屏"/>
                         </StackPanel>
                     </StackPanel>
-                </GroupBox>
-
-                <!-- 输入控制设置 -->
+                </GroupBox>                <!-- 输入控制设置 -->
                 <GroupBox Header="🎮 输入控制" Style="{StaticResource GroupBoxStyle}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,5">
@@ -251,6 +261,39 @@
                             <CheckBox Content="UHID鼠标模式" IsChecked="{Binding UHID鼠标.启用}" 
                                       VerticalAlignment="Center"
                                       ToolTip="更好的鼠标兼容性"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 音频设置 -->
+                <GroupBox Header="🎵 音频设置" Style="{StaticResource GroupBoxStyle}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <CheckBox Content="启用音频" IsChecked="{Binding 启用音频}" 
+                                      VerticalAlignment="Center" Width="120"
+                                      ToolTip="同时传输设备音频"/>
+                            <Label Content="音频码率:" Style="{StaticResource LabelStyle}" Width="80"/>
+                            <ComboBox Style="{StaticResource ComboBoxStyle}" Width="100" Text="{Binding 音频码率.参数}">
+                                <ComboBoxItem>64K</ComboBoxItem>
+                                <ComboBoxItem>128K</ComboBoxItem>
+                                <ComboBoxItem>192K</ComboBoxItem>
+                                <ComboBoxItem>256K</ComboBoxItem>
+                            </ComboBox>                            <TextBlock Text="推荐: 128K" VerticalAlignment="Center" Margin="5,0" 
+                                       Foreground="Gray" FontSize="11"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 其他设置 -->
+                <GroupBox Header="⚙️ 其他设置" Style="{StaticResource GroupBoxStyle}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <CheckBox Content="显示详细日志" IsChecked="{Binding 显示详细日志}" 
+                                      VerticalAlignment="Center" Width="120"
+                                      ToolTip="在状态栏显示详细的运行日志"/>
+                            <CheckBox Content="启动时检查更新" IsChecked="{Binding 启动时检查更新}" 
+                                      VerticalAlignment="Center" Width="120"
+                                      ToolTip="程序启动时自动检查scrcpy更新"/>
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>
@@ -290,6 +333,9 @@
                         Style="{StaticResource SuccessButtonStyle}"/>
                 <Button Content="📋 查看设备" Width="120" Height="40" Margin="5"
                         Command="{Binding getDevices}" 
+                        Style="{StaticResource SecondaryButtonStyle}"/>
+                <Button Content="⚙️ 高级设置" Width="120" Height="40" Margin="5"
+                        Command="{Binding ShowAdvancedSettingsCommand}" 
                         Style="{StaticResource SecondaryButtonStyle}"/>
                 <Button Content="❓ 帮助" Width="80" Height="40" Margin="5"
                         Command="{Binding ShowHelpCommand}" 

@@ -85,8 +85,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>    <Compile Include="MOD\COMMAND_data.cs" />
     <Compile Include="Mothod\cmdHelp.cs" />
+    <Compile Include="ViewModel\AdvancedSettingsViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="Views\AdvancedSettingsWindow.xaml.cs">
+      <DependentUpon>AdvancedSettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\AdvancedSettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

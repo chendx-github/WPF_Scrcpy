@@ -69,9 +69,17 @@
                             <Label Content="音频缓冲(ms):" Style="{StaticResource LabelStyle}"/>
                             <TextBox Style="{StaticResource ControlStyle}" Text="{Binding AudioBuffer}"/>
                         </StackPanel>
+                          <StackPanel Orientation="Horizontal">
+                            <Label Content="音频输出缓冲:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding AudioOutputBuffer}" 
+                                     ToolTip="SDL音频输出缓冲区大小(ms)，默认: 5"/>
+                        </StackPanel>
                         
                         <CheckBox Content="禁用音频" IsChecked="{Binding NoAudio}" Margin="5"/>
-                        <CheckBox Content="复制音频" IsChecked="{Binding AudioDup}" Margin="5"/>
+                        <CheckBox Content="复制音频" IsChecked="{Binding AudioDup}" Margin="5" 
+                                  ToolTip="复制音频，仅适用于--audio-source=playback"/>
+                        <CheckBox Content="需要音频" IsChecked="{Binding RequireAudio}" Margin="5"
+                                  ToolTip="音频捕获失败时使scrcpy失败"/>
                     </StackPanel>
                 </GroupBox>
                 
@@ -199,23 +207,152 @@
                         <CheckBox Content="禁用Mipmaps" IsChecked="{Binding NoMipmaps}" Margin="5"/>
                     </StackPanel>
                 </GroupBox>
-                
-                <!-- 性能设置 -->
+                  <!-- 性能设置 -->
                 <GroupBox Header="性能设置" Style="{StaticResource GroupStyle}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="视频缓冲(ms):" Style="{StaticResource LabelStyle}"/>
-                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding VideoBuffer}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding VideoBuffer}" 
+                                     ToolTip="添加视频帧显示前的缓冲延迟，默认: 0"/>
                         </StackPanel>
                         
                         <StackPanel Orientation="Horizontal">
                             <Label Content="时间限制(秒):" Style="{StaticResource LabelStyle}"/>
-                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding TimeLimit}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding TimeLimit}" 
+                                     ToolTip="设置最大镜像时间"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="日志级别:" Style="{StaticResource LabelStyle}"/>
+                            <ComboBox Style="{StaticResource ControlStyle}" SelectedValue="{Binding Verbosity}">
+                                <ComboBoxItem Content="详细" Tag="verbose"/>
+                                <ComboBoxItem Content="调试" Tag="debug"/>
+                                <ComboBoxItem Content="信息" Tag="info"/>
+                                <ComboBoxItem Content="警告" Tag="warn"/>
+                                <ComboBoxItem Content="错误" Tag="error"/>
+                            </ComboBox>
                         </StackPanel>
                         
                         <CheckBox Content="显示FPS计数器" IsChecked="{Binding PrintFps}" Margin="5"/>
                         <CheckBox Content="禁用屏保" IsChecked="{Binding DisableScreensaver}" Margin="5"/>
-                        <CheckBox Content="OTG模式" IsChecked="{Binding OtgMode}" Margin="5"/>
+                        <CheckBox Content="OTG模式" IsChecked="{Binding OtgMode}" Margin="5" 
+                                  ToolTip="仅USB，模拟物理键盘鼠标，无需ADB"/>
+                        <CheckBox Content="禁用清理" IsChecked="{Binding NoCleanup}" Margin="5" 
+                                  ToolTip="禁用退出时的清理"/>
+                        <CheckBox Content="错误时不降分辨率" IsChecked="{Binding NoDownsizeOnError}" Margin="5"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 窗口设置 -->
+                <GroupBox Header="窗口设置" Style="{StaticResource GroupStyle}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="窗口标题:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding WindowTitle}" 
+                                     ToolTip="设置自定义窗口标题"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="窗口宽度:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding WindowWidth}" 
+                                     ToolTip="设置初始窗口宽度，0为自动"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="窗口高度:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding WindowHeight}" 
+                                     ToolTip="设置初始窗口高度，0为自动"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="窗口X位置:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding WindowX}" 
+                                     ToolTip="设置初始窗口水平位置，auto为自动"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="窗口Y位置:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding WindowY}" 
+                                     ToolTip="设置初始窗口垂直位置，auto为自动"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 编码器设置 -->
+                <GroupBox Header="编码器设置" Style="{StaticResource GroupStyle}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="视频编码器:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding VideoEncoder}" 
+                                     ToolTip="使用特定的MediaCodec视频编码器"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="视频编码选项:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding VideoCodecOptions}" 
+                                     ToolTip="设置设备视频编码器选项，格式: key[:type]=value[,...]"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="音频编码器:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding AudioEncoder}" 
+                                     ToolTip="使用特定的MediaCodec音频编码器"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="音频编码选项:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding AudioCodecOptions}" 
+                                     ToolTip="设置设备音频编码器选项"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 电源管理 -->
+                <GroupBox Header="电源管理" Style="{StaticResource GroupStyle}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="屏幕关闭超时:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding ScreenOffTimeout}" 
+                                     ToolTip="设置scrcpy运行时的屏幕关闭超时(秒)"/>
+                        </StackPanel>
+                        
+                        <CheckBox Content="关闭时断电" IsChecked="{Binding PowerOffOnClose}" Margin="5" 
+                                  ToolTip="关闭scrcpy时关闭设备屏幕"/>
+                        <CheckBox Content="启动时不供电" IsChecked="{Binding NoPowerOn}" Margin="5" 
+                                  ToolTip="启动时不为设备供电"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 其他设置 -->
+                <GroupBox Header="其他设置" Style="{StaticResource GroupStyle}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="文件推送目标:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding PushTarget}" 
+                                     ToolTip="设置拖放文件到设备的目标目录"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="快捷键修饰符:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding ShortcutMod}" 
+                                     ToolTip="指定scrcpy快捷键修饰符，如: lalt,lsuper"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="裁剪区域:" Style="{StaticResource LabelStyle}"/>
+                            <TextBox Style="{StaticResource ControlStyle}" Text="{Binding CropArea}" 
+                                     ToolTip="在服务器上裁剪设备屏幕，格式: width:height:x:y"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="显示方向:" Style="{StaticResource LabelStyle}"/>
+                            <ComboBox Style="{StaticResource ControlStyle}" SelectedValue="{Binding DisplayOrientation}">
+                                <ComboBoxItem Content="0度" Tag="0"/>
+                                <ComboBoxItem Content="90度" Tag="90"/>
+                                <ComboBoxItem Content="180度" Tag="180"/>
+                                <ComboBoxItem Content="270度" Tag="270"/>
+                            </ComboBox>
+                        </StackPanel>
                     </StackPanel>
                 </GroupBox>
                 

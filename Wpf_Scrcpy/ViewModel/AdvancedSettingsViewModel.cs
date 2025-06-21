@@ -39,13 +39,18 @@ namespace Wpf_Scrcpy.ViewModel
         {
             get => _noAudio;
             set => Set(ref _noAudio, value);
-        }
-
-        private bool _audioDup = false;
+        }        private bool _audioDup = false;
         public bool AudioDup
         {
             get => _audioDup;
             set => Set(ref _audioDup, value);
+        }
+
+        private bool _requireAudio = false;
+        public bool RequireAudio
+        {
+            get => _requireAudio;
+            set => Set(ref _requireAudio, value);
         }
 
         // 相机设置
@@ -219,24 +224,194 @@ namespace Wpf_Scrcpy.ViewModel
         {
             get => _disableScreensaver;
             set => Set(ref _disableScreensaver, value);
-        }
-
-        private bool _otgMode = false;
+        }        private bool _otgMode = false;
         public bool OtgMode
         {
             get => _otgMode;
             set => Set(ref _otgMode, value);
         }
 
-        public void ResetToDefaults()
+        // 音频输出缓冲设置
+        private string _audioOutputBuffer = "5";
+        public string AudioOutputBuffer
+        {
+            get => _audioOutputBuffer;
+            set => Set(ref _audioOutputBuffer, value);
+        }
+
+        // 窗口设置
+        private string _windowTitle = "";
+        public string WindowTitle
+        {
+            get => _windowTitle;
+            set => Set(ref _windowTitle, value);
+        }
+
+        private string _windowWidth = "0";
+        public string WindowWidth
+        {
+            get => _windowWidth;
+            set => Set(ref _windowWidth, value);
+        }
+
+        private string _windowHeight = "0";
+        public string WindowHeight
+        {
+            get => _windowHeight;
+            set => Set(ref _windowHeight, value);
+        }
+
+        private string _windowX = "auto";
+        public string WindowX
+        {
+            get => _windowX;
+            set => Set(ref _windowX, value);
+        }
+
+        private string _windowY = "auto";
+        public string WindowY
+        {
+            get => _windowY;
+            set => Set(ref _windowY, value);
+        }
+
+        // 电源和屏幕管理
+        private bool _powerOffOnClose = false;
+        public bool PowerOffOnClose
+        {
+            get => _powerOffOnClose;
+            set => Set(ref _powerOffOnClose, value);
+        }
+
+        private bool _noPowerOn = false;
+        public bool NoPowerOn
+        {
+            get => _noPowerOn;
+            set => Set(ref _noPowerOn, value);
+        }
+
+        private string _screenOffTimeout = "";
+        public string ScreenOffTimeout
+        {
+            get => _screenOffTimeout;
+            set => Set(ref _screenOffTimeout, value);
+        }
+
+        // 文件传输设置
+        private string _pushTarget = "/sdcard/Download/";
+        public string PushTarget
+        {
+            get => _pushTarget;
+            set => Set(ref _pushTarget, value);
+        }
+
+        // 显示方向设置
+        private string _displayOrientation = "0";
+        public string DisplayOrientation
+        {
+            get => _displayOrientation;
+            set => Set(ref _displayOrientation, value);
+        }
+
+        private string _captureOrientation = "";
+        public string CaptureOrientation
+        {
+            get => _captureOrientation;
+            set => Set(ref _captureOrientation, value);
+        }
+
+        // 裁剪设置
+        private string _cropArea = "";
+        public string CropArea
+        {
+            get => _cropArea;
+            set => Set(ref _cropArea, value);
+        }
+
+        // 视频编码器设置
+        private string _videoEncoder = "";
+        public string VideoEncoder
+        {
+            get => _videoEncoder;
+            set => Set(ref _videoEncoder, value);
+        }
+
+        private string _videoCodecOptions = "";
+        public string VideoCodecOptions
+        {
+            get => _videoCodecOptions;
+            set => Set(ref _videoCodecOptions, value);
+        }
+
+        // 音频编码器设置
+        private string _audioEncoder = "";
+        public string AudioEncoder
+        {
+            get => _audioEncoder;
+            set => Set(ref _audioEncoder, value);
+        }
+
+        private string _audioCodecOptions = "";
+        public string AudioCodecOptions
+        {
+            get => _audioCodecOptions;
+            set => Set(ref _audioCodecOptions, value);
+        }
+
+        // 快捷键修饰符设置
+        private string _shortcutMod = "lalt,lsuper";
+        public string ShortcutMod
+        {
+            get => _shortcutMod;
+            set => Set(ref _shortcutMod, value);
+        }
+
+        // V4L2设置 (Linux only)
+        private string _v4l2Sink = "";
+        public string V4l2Sink
+        {
+            get => _v4l2Sink;
+            set => Set(ref _v4l2Sink, value);
+        }
+
+        private string _v4l2Buffer = "0";
+        public string V4l2Buffer
+        {
+            get => _v4l2Buffer;
+            set => Set(ref _v4l2Buffer, value);
+        }
+
+        // 日志级别设置
+        private string _verbosity = "info";
+        public string Verbosity
+        {
+            get => _verbosity;
+            set => Set(ref _verbosity, value);
+        }
+
+        // 系统级设置
+        private bool _noCleanup = false;
+        public bool NoCleanup
+        {
+            get => _noCleanup;
+            set => Set(ref _noCleanup, value);
+        }
+
+        private bool _noDownsizeOnError = false;
+        public bool NoDownsizeOnError
+        {
+            get => _noDownsizeOnError;
+            set => Set(ref _noDownsizeOnError, value);
+        }        public void ResetToDefaults()
         {
             // 音频设置默认值
             AudioCodec = "opus";
             AudioBitRate = "128K";
             AudioSource = "output";
-            AudioBuffer = "50";
+            AudioBuffer = "50";            AudioOutputBuffer = "5";
             NoAudio = false;
             AudioDup = false;
+            RequireAudio = false;
 
             // 相机设置默认值
             CameraFacing = "back";
@@ -265,6 +440,16 @@ namespace Wpf_Scrcpy.ViewModel
             NewDisplay = "";
             RenderDriver = "";
             NoMipmaps = false;
+            DisplayOrientation = "0";
+            CaptureOrientation = "";
+            CropArea = "";
+
+            // 窗口设置默认值
+            WindowTitle = "";
+            WindowWidth = "0";
+            WindowHeight = "0";
+            WindowX = "auto";
+            WindowY = "auto";
 
             // 性能设置默认值
             VideoBuffer = "0";
@@ -272,6 +457,34 @@ namespace Wpf_Scrcpy.ViewModel
             PrintFps = false;
             DisableScreensaver = false;
             OtgMode = false;
+
+            // 编码器设置默认值
+            VideoEncoder = "";
+            VideoCodecOptions = "";
+            AudioEncoder = "";
+            AudioCodecOptions = "";
+
+            // 电源管理默认值
+            PowerOffOnClose = false;
+            NoPowerOn = false;
+            ScreenOffTimeout = "";
+
+            // 文件传输默认值
+            PushTarget = "/sdcard/Download/";
+
+            // 快捷键默认值
+            ShortcutMod = "lalt,lsuper";
+
+            // V4L2设置默认值
+            V4l2Sink = "";
+            V4l2Buffer = "0";
+
+            // 日志级别默认值
+            Verbosity = "info";
+
+            // 系统设置默认值
+            NoCleanup = false;
+            NoDownsizeOnError = false;
         }
     }
 }
