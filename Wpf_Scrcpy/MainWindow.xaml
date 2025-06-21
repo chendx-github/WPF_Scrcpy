@@ -122,10 +122,10 @@
                                       SelectedValue="{Binding 设备.参数}"
                                       IsEditable="True"
                                       ToolTip="选择或输入设备序列号"/>
-                            <Button Content="刷新设备" Height="28" Margin="5,0" 
+                            <Button Content="刷新设备" Height="28" Margin="0,0" 
                                     Command="{Binding getDevices}" 
-                                    Style="{StaticResource SecondaryButtonStyle}"/>
-                        </StackPanel>                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    Style="{StaticResource SecondaryButtonStyle}" Padding="3,0,3,0"/>
+                        </StackPanel>                        <StackPanel Orientation="Horizontal" Margin="0,5" Cursor="Hand">
                             <Label Content="连接方式:" Style="{StaticResource LabelStyle}"/>
                             <ComboBox Style="{StaticResource ComboBoxStyle}" SelectedValue="{Binding ConnectionType}">
                                 <ComboBoxItem Content="USB连接" Tag="usb"/>
