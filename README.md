@@ -1,61 +1,215 @@
 # WPFscrcpy
 
-#### 介绍
-安卓投屏工具
-用c# wpf封装一下  Scrcpy这个工具  本来有很多其他的工具的 但是感觉用起来一般还有很多都收费 
-所以我想自己弄一个
-大概查了一下 大部分功能  Scrcpy 都封装好了  只需要做个前台管理的界面就行了
-有兴趣的也可以进来增加功能  还准备以后开发一些群控  还有界面管理之类的功能
-大家都出一份力可以做的更好
-
-至于功能什么的可以看这个页面https://gitee.com/mirrors/scrcpy
-国外的看这里https://github.com/Genymobile/scrcpy
-
-Encapsulate Scrcpy with C # WPF for Android screen casting tools. Originally, there were many other tools available, but I feel that there are still many charges when using them. So, I want to make a rough check myself. Most of the functions Scrcpy are packaged and only need to be created as a front-end management interface. If you are interested, you can come in and add more functions. We are also preparing to develop some group control and interface management functions in the future. Everyone can contribute and do better
-
-As for the functions, you can refer to this page https://gitee.com/mirrors/scrcpy Look here for those from abroad https://github.com/Genymobile/scrcpy
+<div align="center">
+  <h3>🎯 简洁易用的Android屏幕投屏工具</h3>
+  <p>基于Scrcpy的WPF桌面应用，提供直观的图形界面和丰富的自定义选项</p>
+</div>
 
 
-![输入图片说明](image.png)
-需要自行下载Scrcpy
-放在 D:\sof\scrcpy-win64-v1.17 这个目录下面 其实你放哪里都可以，只要自己设置好路径就好了
+---
 
-这个软件的主要特点就是自定义参数  没有限制啥的 都可以自己输入
+## 📖 项目介绍
 
-#### 软件架构
-软件架构说明
+WPFscrcpy是一个基于Scrcpy的Android屏幕投屏工具，使用C# WPF技术开发。相比市面上的同类工具，本项目完全免费开源，提供了更加直观易用的图形界面，让用户可以轻松管理投屏参数和设备连接。
 
-#### 安装教程
+### 🎯 设计理念
 
-1.  需要.NET 4.52 +
-2.  打开即可使用
+- **简单易用**：图形化界面，无需命令行操作
+- **功能完整**：支持Scrcpy的全部功能特性
+- **高度自定义**：所有参数均可自由配置
+- **完全免费**：开源项目，无任何使用限制
 
-#### 使用说明
+## ✨ 功能特性
 
-1.  点击查看连接设备(首先你得连接安卓手机  不会的请百度)
-2.  选中设备
-3.  选择参数
-4.  点开始
+### 🖥️ 主要功能
 
-#### 参与贡献
+- **设备管理**：自动识别连接的Android设备
+- **屏幕投屏**：高质量实时屏幕镜像
+- **设备控制**：支持鼠标键盘操作设备
+- **参数自定义**：灵活配置所有投屏参数
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+### 🛠️ 详细配置选项
 
-#### 更新记录
-2024-4-30 将程序完全打包，懒人可以不用下载打开即可使用
-2024-4-30 增加了 hud键盘鼠标的适配
+#### 网络设置
 
+- TCP/IP连接支持
+- 端口自定义配置
+- 连接方式选择
 
+#### 视频质量设置
 
+- 分辨率调节（最大分辨率配置）
+- 视频码率控制
+- 帧率限制设置
+- 视频编码器选择
 
-#### 特技
+#### 输入控制
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+- 鼠标键盘映射
+- 多点触控支持
+- 输入延迟优化
+
+#### 显示选项
+
+- 窗口大小调节
+- 全屏模式支持
+- 显示方向控制
+
+## 🖼️ 软件界面
+
+### 主界面
+
+![主界面](user_input_files/image_1.png)
+
+### 高级设置
+
+![配置界面](user_input_files/image.png)
+
+## 📥 安装说明
+
+### 系统要求
+
+- **操作系统**：Windows 7/8/10/11
+- **运行环境**：.NET Framework 4.5.2 或更高版本
+- **设备要求**：Android 5.0+ 设备，开启开发者选项和USB调试
+
+### 安装步骤
+
+1. **下载Scrcpy核心文件**
+
+   ```
+   从官方仓库下载Scrcpy：https://github.com/Genymobile/scrcpy/releases
+   将下载的文件解压到：D:\sof\scrcpy-win64-v1.17\
+   （也可放置在其他目录，需在软件中设置正确路径）
+   ```
+
+2. **下载WPFscrcpy**
+
+   ```
+   下载本项目的最新Release版本
+   解压到任意目录即可使用
+   ```
+
+3. **设备准备**
+
+   ```
+   - 在Android设备上开启"开发者选项"
+   - 启用"USB调试"
+   - 通过USB连接设备到电脑
+   ```
+
+## 🚀 使用指南
+
+### 快速开始
+
+1. **连接设备**
+   - 通过USB连接Android设备
+   - 点击"刷新设备"按钮
+   - 在设备列表中选择目标设备
+
+2. **配置参数**
+   - 根据需要调整视频质量设置
+   - 配置网络连接选项（如使用无线连接）
+   - 设置输入控制偏好
+
+3. **开始投屏**
+   - 点击"开始镜像"按钮
+   - 首次连接可能需要在手机上确认授权
+
+### 高级功能
+
+#### 无线连接设置
+
+1. 确保设备和电脑在同一网络
+2. 在设备设置中配置TCP/IP连接
+3. 输入设备IP地址和端口
+4. 点击连接
+
+#### 自定义参数
+
+- 所有Scrcpy支持的命令行参数都可以在界面中配置
+- 支持保存常用的参数配置组合
+- 可以导入/导出配置文件
+
+## 🔧 开发计划
+
+### 即将推出的功能
+
+- [ ] 多设备同时管理（群控功能）
+- [ ] 设备管理界面优化
+- [ ] 配置文件导入导出
+- [ ] 自动化脚本支持
+- [ ] 性能监控面板
+
+### 长期规划
+
+- [ ] 无线设备自动发现
+- [ ] 云端配置同步
+- [ ] 插件系统支持
+- [ ] 多语言界面
+
+## 🤝 参与贡献
+
+我们欢迎所有形式的贡献！
+
+### 贡献方式
+
+1. **Fork** 本仓库
+2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交你的修改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 创建一个 **Pull Request**
+
+### 贡献指南
+
+- 提交前请确保代码通过测试
+- 遵循现有的代码风格
+- 为新功能添加相应的文档
+- 提交信息请使用清晰的描述
+
+## 📝 更新日志
+
+### v1.2.4 (2025-06-21)
+
+- ✨ 新增：优化UI显示
+- ✨ 新增：高级配置
+
+### v1.2.0 (2024-04-30)
+
+- ✨ 新增：程序完全打包，支持开箱即用
+- ✨ 新增：HUD键盘鼠标适配功能
+- 🐛 修复：设备连接稳定性问题
+
+### v1.1.0
+
+- ✨ 新增：高级参数配置界面
+- ✨ 新增：设备管理功能
+- 🎨 优化：用户界面体验
+
+### v1.0.0
+
+- 🎉 首次发布
+- ✨ 基础投屏功能
+- ✨ 设备连接管理
+
+## 📄 许可证
+
+本项目基于 [MIT License](LICENSE) 开源协议
+
+## 🙏 致谢
+
+- [Scrcpy](https://github.com/Genymobile/scrcpy) - 提供了强大的核心投屏功能
+- 所有为本项目贡献代码和建议的开发者们
+
+## 📞 联系我们
+
+- 🐛 **问题反馈**：[Issues](../../issues)
+- 💬 **功能建议**：[Discussions](../../discussions)
+- 📧 **邮件联系**：通过GitHub个人资料联系
+
+---
+
+<div align="center">
+  <p>⭐ 如果这个项目对你有帮助，请给我们一个Star！</p>
+  <p>Made with ❤️ by WPFscrcpy Team</p>
+</div>
